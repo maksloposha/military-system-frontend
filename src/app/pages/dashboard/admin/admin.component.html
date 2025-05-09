@@ -1,0 +1,35 @@
+<!-- Таблиця користувачів -->
+<div *ngIf="!loading" class="user-table-container">
+  <table class="user-table">
+    <thead>
+    <tr>
+      <th>Username</th>
+      <th>Email</th>
+      <th>Role</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let user of users">
+      <td>{{ user.username }}</td>
+      <td>{{ user.email }}</td>
+      <td>{{ user.role }}</td>
+      <td>{{ user.status }}</td>
+      <td>
+        <button [disabled]="user.status !== 'PENDING'" (click)="approveUser(user.id)">Approve</button>
+        <button [disabled]="user.role === 'ADMIN' && !isCurrentUser(user)" (click)="editUser(user)">Edit</button>
+        <button [disabled]="user.role === 'ADMIN'" (click)="deleteUser(user.id)">Delete</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="loading" class="loading-message">
+  Loading users...
+</div>
+
+<app-profile *ngIf="editMode"
+             [userId]="userId"
+              (onCancel)="cancelEdit()"></app-profile>

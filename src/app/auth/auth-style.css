@@ -1,0 +1,81 @@
+.auth-container {
+  max-width: 420px;
+  margin: 60px auto;
+  padding: 30px;
+  background-color: #1e2a1f; /* темно-зелений камуфляж */
+  border: 2px solid #4b5320; /* military olive */
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+  font-family: 'Courier New', monospace;
+  color: #d0d0c8;
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+  color: #c0d9af; /* світло-зелений */
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  border: 1px solid #4b5320;
+  background-color: #2f3b2e;
+  color: #fff;
+  border-radius: 4px;
+}
+
+input:focus {
+  outline: none;
+  border-color: #9acd32;
+  box-shadow: 0 0 6px #9acd32;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  background-color: #556b2f;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+button:hover {
+  background-color: #6b8e23;
+}
+
+.error {
+  color: #ff4d4d;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.success {
+  color: #7fff00;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.show-password-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.show-password-container label {
+  margin-top: 0;
+  margin-right: auto;
+}
+
+.show-password-container input {
+  width: auto;
+  margin: 0;
+  margin-left: 10px;
+}

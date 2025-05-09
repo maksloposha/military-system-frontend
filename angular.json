@@ -21,15 +21,21 @@
             ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
+              "src/assets",
               {
                 "glob": "**/*",
                 "input": "public"
               }
             ],
             "styles": [
+              "./node_modules/leaflet-draw/dist/leaflet.draw.css",
+              "./node_modules/leaflet/dist/leaflet.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/leaflet/dist/leaflet.js",
+              "node_modules/leaflet-draw/dist/leaflet.draw.js"
+            ]
           },
           "configurations": {
             "production": {

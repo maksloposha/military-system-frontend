@@ -1,0 +1,22 @@
+<div class="auth-container">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <label>Username</label>
+    <input formControlName="username" />
+
+    <label>Password</label>
+    <input
+      formControlName="password"
+      [type]="passwordVisible ? 'text' : 'password'"
+    />
+
+    <div class="show-password-container">
+      <label>Show Password</label>
+      <input type="checkbox" formControlName="showPassword" />
+    </div>
+
+    <button type="submit">Login</button>
+    <a routerLink="/register">Switch to Register</a>
+
+    <div class="error" *ngIf="errorMessage">{{ errorMessage }}</div>
+  </form>
+</div>

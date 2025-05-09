@@ -1,0 +1,77 @@
+<div class="chat-wrapper">
+  <!-- Sidebar: List of Chats -->
+  <div class="chat-sidebar">
+    <div class="sidebar-header">
+      <h3>Chats</h3>
+      <button (click)="createNewChat()">+</button>
+    </div>
+    <ul class="chat-list">
+      <li *ngFor="let chat of chats" (click)="selectChat(chat)" [class.active]="chat === selectedChat">
+        <div class="chat-name">{{ chat.name }}</div>
+<!--        <div class="last-message">{{ chat.lastMessage.content }}</div>-->
+      </li>
+    </ul>
+  </div>
+
+  <!-- Chat Window -->
+  <div class="chat-main" *ngIf="selectedChat; else noChat">
+    <div class="chat-header">
+      <h4>{{ selectedChat.name }}</h4>
+      <div class="participants">{{ selectedChat.participants.length }} online</div>
+    </div>
+
+    <div class="chat-messages" #scrollContainer>
+      <div *ngFor="let message of selectedChat.messages" class="chat-message" [ngClass]="{ 'own-message': message.sender === currentUser }">
+        <div class="message-meta">
+          <span class="user">{{ message.sender }}</span>
+          <span class="timestamp">{{ message.timestamp | date:'shortTime' }}</span>
+        </div>
+        <div class="message-content">{{ message.content }}</div>
+      </div>
+    </div>
+
+    <form
+      [formGroup]="chatForm"
+      (ngSubmit)="sendMessage()"
+      class="chat-input"
+      (keydown.enter)="onEnter($event)"
+    >
+  <textarea
+    formControlName="message"
+    placeholder="Type a message..."
+    rows="1"
+  ></textarea>
+      <button
+        type="submit"
+        [disabled]="chatForm.invalid || !chatForm.value.message?.trim()"
+      >
+        Send
+      </button>
+    </form>
+  </div>
+
+  <!-- Empty State -->
+  <ng-template #noChat>
+    <div class="chat-main empty">
+      <p>Select a chat to start messaging</p>
+    </div>
+  </ng-template>
+</div>
+
+<!-- ...існуючий шаблон... -->
+
+<!-- Modal для створення нового чату -->
+<div class="modal" *ngIf="showNewChatModal">
+  <div class="modal-content">
+    <h3>Start New Chat</h3>
+    <label>Choose recipient:</label>
+    <select [(ngModel)]="newChatRecipient">
+      <option *ngFor="let user of availableUsers" [value]="user">{{ user }}</option>
+    </select>
+    <div class="modal-actions">
+      <button (click)="confirmNewChat()">Start</button>
+      <button (click)="cancelNewChat()">Cancel</button>
+    </div>
+  </div>
+</div>
+

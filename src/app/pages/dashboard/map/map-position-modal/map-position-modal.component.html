@@ -1,0 +1,36 @@
+<div class="modal-backdrop" *ngIf="visible">
+  <div class="modal-content">
+    <div class="modal-title">
+      {{ marker ? 'Редагувати позицію' : 'Додати позицію' }}
+    </div>
+
+    <label>Назва:</label>
+    <input type="text" [(ngModel)]="name" />
+
+    <label>Тип маркера:</label>
+    <select [(ngModel)]="markerType">
+      <option *ngFor="let type of markerTypes" [value]="type">{{ type }}</option>
+    </select>
+
+    <label>Опис:</label>
+    <textarea [(ngModel)]="description"></textarea>
+
+    <label>Тип підрозділу:</label>
+    <select [(ngModel)]="unitType">
+      <option *ngFor="let unit of unitTypes" [value]="unit">{{ unit }}</option>
+    </select>
+
+    <label>Командир:</label>
+    <select [(ngModel)]="commander">
+      <option *ngFor="let c of commanders" [value]="c.id">{{ c.name }}</option>
+    </select>
+
+    <label>Оцінка особового складу:</label>
+    <input type="number" [(ngModel)]="estimatedPersonnel" />
+
+    <div class="modal-buttons">
+      <button class="save" (click)="save()">Зберегти</button>
+      <button class="cancel" (click)="cancel()">Скасувати</button>
+    </div>
+  </div>
+</div>

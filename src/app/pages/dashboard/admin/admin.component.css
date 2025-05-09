@@ -1,0 +1,147 @@
+/* Загальні стилі */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #2d2d2d; /* Темний фон */
+  color: #f1f1f1; /* Світлий текст */
+}
+
+h1, h2, h3 {
+  color: #4b6e4f; /* Військовий зелений */
+}
+
+/* Стиль для таблиці користувачів */
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.user-table th, .user-table td {
+  padding: 12px 20px;
+  text-align: left;
+}
+
+.user-table th {
+  background-color: #4b6e4f; /* Військовий зелений */
+  color: #f1f1f1;
+  font-weight: bold;
+}
+
+.user-table td {
+  background-color: #3c4c3d; /* Темніший зелений */
+  border: 1px solid #666;
+}
+
+.user-table tr:nth-child(even) td {
+  background-color: #2a3a29; /* Ще темніший зелений */
+}
+
+.user-table tr:hover {
+  background-color: #506850; /* Легке підсвічування при наведенні */
+}
+
+/* Стиль для кнопок */
+button {
+  background-color: #4b6e4f;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: #3c4c3d; /* Темніший відтінок при наведенні */
+}
+
+/* Стиль для повідомлень */
+.error {
+  color: #d9534f;
+  font-size: 16px;
+}
+
+.loading-message {
+  font-size: 18px;
+  color: #f1f1f1;
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Стиль для форми */
+form {
+  background-color: #3c4c3d;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 20px auto;
+  width: 50%;
+}
+
+form label {
+  font-size: 16px;
+  color: #f1f1f1;
+  display: block;
+  margin-bottom: 10px;
+}
+
+form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #666;
+  background-color: #2a3a29;
+  color: white;
+}
+
+form input[type="password"] {
+  font-family: 'Courier New', monospace; /* Військовий стиль шрифт */
+}
+
+/* Стиль для посилань */
+a {
+  color: #4b6e4f;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Стиль для чекабокса */
+.show-password {
+  color: #f1f1f1;
+  font-size: 14px;
+}
+
+button:disabled {
+  background-color: #ccc; /* сірий фон */
+  color: #666; /* сірий текст */
+  cursor: not-allowed; /* курсор заборони */
+  opacity: 0.6; /* трохи прозоріший */
+}
+
+app-profile {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(6px);
+  background-color: rgba(0, 0, 0, 0.4); /* темний напівпрозорий фон */
+}
+/* Анімація появи */
+@keyframes popup-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+

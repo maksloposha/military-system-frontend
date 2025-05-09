@@ -1,0 +1,29 @@
+<div class="map-container">
+  <div id="map"></div>
+
+  <!-- Кнопка додавання позиції всередині карти -->
+  <button class="btn-open-modal" [disabled]="buttonsAreDisabled()" (click)="onAddPositionClick()">Додати позицію</button>
+  <button class="btn-open-modal" [disabled]="buttonsAreDisabled()" (click)="isZoneCreationMode=true">Додати зону</button>
+
+  <!-- Підказка під час вибору точки -->
+  <div class="selecting-overlay" *ngIf="isSelectingPosition">
+    <div class="selecting-message">
+      Виберіть точку на карті або скасуйте
+      <button class="btn-cancel-select" (click)="cancelSelecting()">Скасувати</button>
+    </div>
+  </div>
+
+  <!-- Модальне вікно -->
+  <app-map-position-modal
+    [visible]="isModalVisible"
+    [coordinates]="selectedCoordinates"
+    [marker]="markerToEdit"
+    (onCancel)="closeModal()"
+    (onSave)="onMarkerSaved()"
+    *ngIf="isModalVisible">
+  </app-map-position-modal>
+
+  <app-map-zone [map]="map"
+  [visible]="isZoneCreationMode"
+   (isCreationMode)="isZoneCreationMode=false"></app-map-zone>
+</div>

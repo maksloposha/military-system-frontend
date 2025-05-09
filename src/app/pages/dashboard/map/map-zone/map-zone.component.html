@@ -1,0 +1,23 @@
+<div *ngIf="!drawingReady && visible" class="zone-overlay">
+  <div class="zone-form">
+    <label>
+      <span>Назва зони:</span>
+      <input type="text" [(ngModel)]="zoneName" />
+    </label>
+
+    <label>
+      <span>Тип зони:</span>
+      <select [(ngModel)]="zoneType">
+        <option value="ALLY">Союзна</option>
+        <option value="ENEMY">Противник</option>
+        <option value="NEUTRAL">Сіра</option>
+      </select>
+    </label>
+
+    <div class="zone-buttons">
+      <button class="confirm-btn" (click)="zoneToEdit ? saveNewZoneDetails() : startDrawing() ">   {{ zoneToEdit ? 'Оновити зону' : 'Нанести на карту' }}</button>
+      <button class="cancel-btn" (click)="cancelZoneCreation()">Скасувати</button>
+    </div>
+  </div>
+</div>
+

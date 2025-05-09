@@ -1,0 +1,83 @@
+.tabs-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  background-image: url('/assets/background/header-back.png'); /* Темний фон для військового стилю */
+  border-bottom: 3px solid #555; /* Міцний металевий ефект */
+  font-family: 'Courier New', Courier, monospace; /* Військовий шрифт */
+  text-transform: uppercase; /* Всі літери великі */
+}
+
+nav {
+  display: flex;
+  gap: 12px;
+}
+
+.tabs button {
+  padding: 12px 24px;
+  background-color: #282828;
+  color: #b0b0b0; /* Світло-сірий текст */
+  border: 2px solid #555;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-family: 'Courier New', Courier, monospace;
+  transition: background-color 0.3s, color 0.3s;
+  position: relative;
+}
+
+.tabs button::before {
+  content: '\2022'; /* Трикрапка як маркер */
+  font-size: 22px;
+  position: absolute;
+  left: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #7a7a7a;
+}
+
+.tabs button:hover {
+  background-color: #404040; /* Затінений фон при наведенні */
+}
+
+.tabs button.active {
+  background-color: #556b2f; /* Оливковий колір */
+  color: #fff;
+  border-color: #6b8e23;
+  box-shadow: 0 0 10px rgba(86, 107, 47, 0.7); /* Легкий блік */
+}
+
+.logout-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: #fff;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.logout-icon:hover {
+  color: #f00; /* Червоний колір для ефекту попередження */
+}
+
+.tab-content {
+  flex: 1;
+  height: calc(100vh - 60px); /* Враховуємо висоту .tabs-header */
+  overflow: hidden;
+  position: relative;
+  background-color: #81613E;
+  background-image: url("https://www.transparenttextures.com/patterns/navy.png");
+  border-top: 2px solid #555;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Courier New', Courier, monospace; /* Стиль шрифту для всього документу */
+}

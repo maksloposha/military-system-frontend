@@ -1,0 +1,107 @@
+/* Затемнення фону */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7); /* Темніше, як нічна операція */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(2px);
+}
+
+/* Вікно модалки */
+.modal-content {
+  background: url('/assets/background/camo-modal.jpg') center/cover no-repeat, #2e2e2e;
+  color: #f2f2f2;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 420px;
+  max-width: 95vw;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
+  border: 2px solid #6b8e23; /* оливкова обводка */
+  max-height: 90vh;
+  overflow-y: auto;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+/* Заголовок */
+.modal-title {
+  font-size: 1.6rem;
+  font-weight: bold;
+  margin-bottom: 1.2rem;
+  text-align: center;
+  color: #d4ed91;
+  text-transform: uppercase;
+  border-bottom: 1px solid #556b2f;
+  padding-bottom: 0.5rem;
+}
+
+/* Група полів */
+.modal-field,
+.modal-content label {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #c0d9af;
+}
+
+.modal-content input,
+.modal-content select,
+.modal-content textarea {
+  padding: 0.5rem;
+  border: 1px solid #556b2f;
+  border-radius: 6px;
+  background-color: #1f1f1f;
+  color: #e0e0e0;
+  font-size: 1rem;
+  font-family: monospace;
+}
+
+.modal-content input:focus,
+.modal-content select:focus,
+.modal-content textarea:focus {
+  outline: none;
+  border-color: #9acd32;
+  box-shadow: 0 0 3px #9acd32;
+}
+
+/* Кнопки */
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+}
+
+button {
+  padding: 0.6rem 1.4rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+  text-transform: uppercase;
+}
+
+button.save {
+  background-color: #556b2f; /* оливково-зелений */
+  color: #fff;
+}
+
+button.save:hover {
+  background-color: #6b8e23;
+}
+
+button.cancel {
+  background-color: #8b0000; /* темно-червоний */
+  color: #fff;
+}
+
+button.cancel:hover {
+  background-color: #a60000;
+}

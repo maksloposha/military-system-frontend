@@ -1,0 +1,40 @@
+.popup-container {
+  font-family: "Segoe UI", sans-serif;
+  background-color: #2e2e2e;
+  color: #e0e0e0;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #6b8e23;
+  min-width: 200px;
+}
+
+.popup-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+button {
+  padding: 6px 12px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.edit-btn {
+  background-color: #556b2f;
+  color: white;
+}
+
+.coords-btn {
+  background-color: #4682b4;
+  color: white;
+}
+
+.delete-btn {
+  background-color: #8b0000;
+  color: white;
+}

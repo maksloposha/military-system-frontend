@@ -1,0 +1,23 @@
+.zone-popup {
+  font-family: sans-serif;
+  font-size: 14px;
+}
+
+.popup-btn {
+  margin: 4px 2px;
+  padding: 4px 8px;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+.zone-enemy {
+  background-color: #e53935;
+  color: white;
+}
+
+.zone-neutral {
+  background-color: #757575;
+  color: white;
+}

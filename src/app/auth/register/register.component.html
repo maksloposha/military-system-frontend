@@ -1,0 +1,24 @@
+<div class="auth-container">
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <label>Username</label>
+    <input formControlName="username" />
+
+    <label>Email</label>
+    <input formControlName="email" type="email" />
+
+    <label>Password</label>
+    <input formControlName="password" type="password" />
+
+    <label>Rank</label>
+    <input formControlName="rank" />
+
+    <label>Unit</label>
+    <input formControlName="unit" />
+
+    <button type="submit">Register</button>
+    <a routerLink="/login">Switch to Login</a>
+
+    <div class="error" *ngIf="errorMessage">{{ errorMessage }}</div>
+    <div class="success" *ngIf="successMessage">{{ successMessage }}</div>
+  </form>
+</div>

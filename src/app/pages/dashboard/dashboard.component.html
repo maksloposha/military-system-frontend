@@ -1,0 +1,19 @@
+<div class="tabs-header">
+  <nav class="tabs">
+    <button (click)="selectTab('map')" [class.active]="selectedTab === 'map'">Map</button>
+    <button (click)="selectTab('chat')" [class.active]="selectedTab === 'chat'">Chat</button>
+    <button (click)="selectTab('profile')" [class.active]="selectedTab === 'profile'">Profile</button>
+    <button *ngIf="isAdmin" (click)="selectTab('admin')" [class.active]="selectedTab === 'admin'">Admin Panel</button>
+  </nav>
+  <button class="logout-icon" (click)="logout()">
+    <i class="fa fa-sign-out-alt"></i>
+  </button>
+</div>
+
+<!-- Контент вкладок -->
+<div class="tab-content">
+  <app-map *ngIf="selectedTab === 'map'"></app-map>
+  <app-chat *ngIf="selectedTab === 'chat'"></app-chat>
+  <app-profile *ngIf="selectedTab === 'profile'"></app-profile>
+  <app-admin *ngIf="selectedTab === 'admin'"></app-admin>
+</div>

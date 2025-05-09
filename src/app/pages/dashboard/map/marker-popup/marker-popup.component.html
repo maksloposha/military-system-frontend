@@ -1,0 +1,14 @@
+<div class="popup-container">
+  <b>{{ marker.name }}</b><br>
+  Тип: {{ marker.type }}<br>
+  Командир: {{ marker.commander }}<br>
+  Ос. склад: {{ marker.estimatedPersonnel }}<br>
+  Опис: {{ marker.description }}<br><br>
+
+  <div class="popup-actions">
+    <button class="edit-btn" (click)="edit()">Редагувати</button>
+    <button class="coords-btn" (click)="changeCoords()">Змінити координати</button>
+    <button class="delete-btn" (click)="delete()">Видалити</button>
+  </div>
+</div>
+
