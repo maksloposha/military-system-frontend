@@ -1,0 +1,149 @@
+.military-panel {
+  background-color: #2d2d2d;
+  color: #f1f1f1;
+  border-radius: 8px;
+  padding: 20px;
+  border: 2px solid #4b6e4f;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+  max-width: 960px;
+  margin: 20px auto;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #4b6e4f;
+}
+
+.panel-title {
+  font-size: 22px;
+  font-weight: bold;
+  color: #4b6e4f;
+  text-transform: uppercase;
+}
+
+.back-btn {
+  background-color: #4b6e4f;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.section-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin-top: 30px;
+}
+
+.military-section {
+  background-color: #3c4c3d;
+  padding: 20px;
+  border-radius: 6px;
+  border: 1px solid #666;
+}
+
+.section-title {
+  font-size: 18px;
+  color: #ffd700;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  border-bottom: 1px solid #777;
+  padding-bottom: 5px;
+}
+
+.military-list {
+  max-height: 250px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+}
+
+.military-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #2a3a29;
+  padding: 10px 15px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  border-left: 4px solid #4b6e4f;
+}
+
+.rank-badge, .unit-badge {
+  font-weight: bold;
+  font-family: 'Courier New', monospace;
+}
+
+.input-group {
+  display: flex;
+  gap: 10px;
+}
+
+.military-input {
+  flex-grow: 1;
+  padding: 10px;
+  background-color: #2a3a29;
+  border: 1px solid #666;
+  color: #f1f1f1;
+  border-radius: 4px;
+}
+
+.military-btn {
+  background-color: #4b6e4f;
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.military-btn:hover {
+  background-color: #3c4c3d;
+}
+
+.delete-btn {
+  background-color: #73343a;
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  background-color: #a13842;
+}
+
+@media (max-width: 768px) {
+  .section-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.military-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7); /* Затінення */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Щоб було поверх усього */
+}
+
+.military-panel {
+  z-index: 10000; /* Ще вище */
+}

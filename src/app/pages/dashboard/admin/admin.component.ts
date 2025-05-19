@@ -1,21 +1,25 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';  // Додавання CommonModule
 import {UserService} from '../../../services/user.service';
 import {User} from '../../../models/user.model';
 import {ProfileComponent} from '../profile/profile.component';
+import {Router} from '@angular/router';
+import {UserSettingsComponent} from './user-settings/user-settings.component';
 
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css'],
   standalone: true,
-  imports: [CommonModule, ProfileComponent]  // Додаємо CommonModule
+  imports: [CommonModule, ProfileComponent, UserSettingsComponent]  // Додаємо CommonModule
 })
 export class AdminComponent implements OnInit {
   users: User[] = [];
   loading = true;
   userId: number | null = null;
   editMode = false;
+  userSettingsVisible = false;
+
 
   constructor(private userService: UserService) {
   }
@@ -63,5 +67,9 @@ export class AdminComponent implements OnInit {
   cancelEdit(): void {
     this.editMode = false;
     this.userId = null;
+  }
+
+  navigateToRanksAndUnits(): void {
+    this.userSettingsVisible = true;
   }
 }

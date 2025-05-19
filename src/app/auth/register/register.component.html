@@ -10,10 +10,14 @@
     <input formControlName="password" type="password" />
 
     <label>Rank</label>
-    <input formControlName="rank" />
+    <select formControlName="rank">
+      <option *ngFor="let r of ranks" [value]="r">{{ r }}</option>
+    </select>
 
     <label>Unit</label>
-    <input formControlName="unit" />
+    <select formControlName="unit">
+      <option *ngFor="let u of units" [value]="u">{{ u }}</option>
+    </select>
 
     <button type="submit">Register</button>
     <a routerLink="/login">Switch to Login</a>

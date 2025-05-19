@@ -24,6 +24,7 @@
   </app-map-position-modal>
 
   <app-map-zone [map]="map"
+                [markerCreating]="isSelectingPosition || isZoneCreationMode"
   [visible]="isZoneCreationMode"
    (isCreationMode)="isZoneCreationMode=false"></app-map-zone>
 </div>

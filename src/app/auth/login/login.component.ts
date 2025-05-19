@@ -2,7 +2,8 @@ import {Component, inject} from '@angular/core';
 import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AuthService} from '../../services/auth.service';
 import {Router, RouterLink} from '@angular/router';
-import {CommonModule} from '@angular/common'; // додати!
+import {CommonModule} from '@angular/common';
+import {ChatEncryptionService} from '../../chat-utils/chat-encryption-service'; // додати!
 
 @Component({
   selector: 'app-login',
@@ -16,6 +17,8 @@ export class LoginComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
 
+  constructor(private chatEncryptionService: ChatEncryptionService) {
+  }
   errorMessage = '';
 
 
@@ -35,6 +38,7 @@ export class LoginComponent {
       this.authService.login(this.loginForm.value).subscribe({
         next: (response) => {
           console.log("Login successful!");
+          this.chatEncryptionService.initKeys(this.loginForm.get('password')?.value!);
           this.router.navigate(['/dashboard']);
         },
         error: (err) => {

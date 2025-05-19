@@ -1,6 +1,6 @@
 // Cleaned ChatService
 import {Injectable} from '@angular/core';
-import {Observable, BehaviorSubject, of} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {Message} from './models/message.model';
 import {WebSocketService} from './chat-websocket-service';
 import {HttpClient} from '@angular/common/http';
@@ -20,6 +20,10 @@ export class ChatService {
 
   getChats(): Observable<any[]> {
      return this.http.get<string[]>(`${environment.apiUrl}/api/chat/getChatsForCurrentUser`, {withCredentials: true});
+  }
+
+  deleteChat(chatId: number): Observable<any> {
+    return this.http.delete<any>(`${environment.apiUrl}/api/chat/deleteChat/${chatId}`, {withCredentials: true});
   }
 
   async fetchRecipientPublicKey(username: string): Promise<JsonWebKey | null> {

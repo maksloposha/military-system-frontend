@@ -1,8 +1,9 @@
-import { Component, inject } from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
-import {RouterLink} from '@angular/router'; // додати!
+import {RouterLink} from '@angular/router';
+import {UserSettingsService} from '../../services/user.settings.service'; // додати!
 
 
 @Component({
@@ -12,12 +13,23 @@ import {RouterLink} from '@angular/router'; // додати!
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterLink]
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
 
   errorMessage = '';
   successMessage = '';
+
+  ranks: any[] = [];
+  units: any[] = [];
+
+  constructor(private userSettingServer: UserSettingsService) { }
+
+  ngOnInit() {
+    this.userSettingServer.getRanks().subscribe(data => this.ranks = data);
+    this.userSettingServer.getUnits().subscribe(data => this.units = data);
+  }
+
 
   registerForm = this.fb.group({
     username: ['', Validators.required],

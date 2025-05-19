@@ -1,1 +1,24 @@
+.custom-icon-wrapper {
+  background: none !important;
+  border: none !important;
+}
+
+.military-icon {
+  width: 40px;
+  height: 40px;
+  display: block;
+}
+
+.military-icon.ally {
+  filter: hue-rotate(90deg) saturate(2);
+}
+
+.military-icon.enemy {
+  filter: hue-rotate(0deg) saturate(3);
+}
+
+.military-icon.international {
+  filter: hue-rotate(220deg) saturate(2);
+}
+
 /* You can add global styles to this file, and also import other style files */

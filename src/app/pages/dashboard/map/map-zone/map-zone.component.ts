@@ -1,20 +1,19 @@
 import {
   Component,
+  ComponentFactoryResolver,
+  EventEmitter,
   Input,
   OnInit,
-  inject,
-  ComponentFactoryResolver,
-  ViewContainerRef,
   Output,
-  EventEmitter
+  ViewContainerRef
 } from '@angular/core';
 import * as L from 'leaflet';
+import {LatLngTuple, LayerGroup, LeafletEvent, Polygon} from 'leaflet';
 import 'leaflet-draw';
 import {FormsModule} from '@angular/forms';
 import {NgIf} from '@angular/common';
 import {MapZoneService} from '../../../../services/map.zone.service';
 import {MapZone} from '../../../../models/zone.model';
-import {LatLngTuple, LayerGroup, LeafletEvent, Polygon} from 'leaflet';
 import {MapZonePopupComponent} from './map-zone-popup/map-zone-popup.component';
 import {ZoneSocketService} from '../../../../service-socket/zone-socket-service';
 
@@ -28,6 +27,7 @@ import {ZoneSocketService} from '../../../../service-socket/zone-socket-service'
 export class MapZoneComponent implements OnInit {
   @Input() map!: L.Map | undefined;
   @Input() visible = false;
+  @Input() markerCreating = false;
 
   private drawnItems = new L.FeatureGroup();
   private drawControl?: L.Draw.Polygon;
@@ -55,7 +55,7 @@ export class MapZoneComponent implements OnInit {
   @Output() isCreationMode = new EventEmitter<Boolean>();
   private zoneMap = new Map<number, { polygon: Polygon, zone: MapZone }>();
 
-  constructor(private mapZoneService: MapZoneService,     private viewContainerRef: ViewContainerRef,
+  constructor(private mapZoneService: MapZoneService, private viewContainerRef: ViewContainerRef,
               private componentFactoryResolver: ComponentFactoryResolver, private mapSocketService: ZoneSocketService) {
     this.mapSocketService.zoneUpdates$.subscribe((event) => {
       switch (event.type) {
@@ -82,7 +82,7 @@ export class MapZoneComponent implements OnInit {
   startDrawing() {
 
     this.drawControl = new L.Draw.Polygon(this.map as any, {
-      shapeOptions: { color: this.getColorByType(this.zoneType) }
+      shapeOptions: {color: this.getColorByType(this.zoneType)}
     });
     if (this.map) {
       this.map.on(L.Draw.Event.CREATED, this.onZoneCreated.bind(this));
@@ -147,7 +147,7 @@ export class MapZoneComponent implements OnInit {
           const popup = this.createPopupComponent(savedZone, newPolygon);
           newPolygon.bindPopup(popup);
 
-          this.zoneMap.set(savedZone.id!, {polygon : newPolygon, zone: savedZone});
+          this.zoneMap.set(savedZone.id!, {polygon: newPolygon, zone: savedZone});
         }, error => {
           console.error('Помилка при оновленні зони:', error);
         });
@@ -155,7 +155,6 @@ export class MapZoneComponent implements OnInit {
 
     });
   }
-
 
 
   enableDelete(polygon: Polygon, zone: MapZone) {
@@ -207,7 +206,12 @@ export class MapZoneComponent implements OnInit {
         fillOpacity: 0.4,
         weight: 2
       }).addTo(this.map!);
-      this.zoneMap.set(savedZone.id!, {polygon:polygon, zone: savedZone});
+      this.zoneMap.set(savedZone.id!, {polygon: polygon, zone: savedZone});
+      polygon.on('click', () => {
+        if (!this.markerCreating) {
+          polygon.openPopup();
+        }
+      })
 
       const popup = this.createPopupComponent(savedZone, polygon);
       polygon.bindPopup(popup);
@@ -255,28 +259,35 @@ export class MapZoneComponent implements OnInit {
         const popup = this.createPopupComponent(zone, polygon);
 
         polygon.bindPopup(popup);
+        polygon.off('click');
+        polygon.on('click', () => {
+          if (!this.markerCreating) {
+            polygon.openPopup();
+          }
+        })
       });
     }, error => {
       console.error('Помилка завантаження зон:', error);
     });
   }
+
   private createPopupComponent(zone: MapZone, polygon: L.Polygon): HTMLElement {
     const factory = this.componentFactoryResolver.resolveComponentFactory(MapZonePopupComponent);
     const componentRef = this.viewContainerRef.createComponent(factory);
     componentRef.instance.zone = zone;
     componentRef.instance.polygon = polygon;
     componentRef.instance.editCoordinates.subscribe(({polygon, zone}) => this.enableEditCoordinates(polygon, zone));
-    componentRef.instance.delete.subscribe(({polygon,zone}) => this.enableDelete(polygon, zone));
-    componentRef.instance.edit.subscribe(({polygon,zone}) => this.enableEdit(polygon, zone));
+    componentRef.instance.delete.subscribe(({polygon, zone}) => this.enableDelete(polygon, zone));
+    componentRef.instance.edit.subscribe(({polygon, zone}) => this.enableEdit(polygon, zone));
 
     return componentRef.location.nativeElement;
   }
 
 
   private addZoneToMap(zone: MapZone) {
-    if(this.zoneMap.has(zone.id!)) {
-        console.error('Zone with this ID already exists on the map:', zone.id);
-        return;
+    if (this.zoneMap.has(zone.id!)) {
+      console.error('Zone with this ID already exists on the map:', zone.id);
+      return;
     }
     const latLngCoords: LatLngTuple[] = zone.coordinates.map(
       (coord: [number, number]) => [coord[1], coord[0]]
@@ -287,6 +298,11 @@ export class MapZoneComponent implements OnInit {
       fillOpacity: 0.4,
       weight: 2
     }).addTo(this.map!);
+    polygon.on('click', () => {
+      if (!this.markerCreating) {
+        polygon.openPopup();
+      }
+    })
 
     const popup = this.createPopupComponent(zone, polygon);
     polygon.bindPopup(popup);

@@ -1,0 +1,9 @@
+<div class="confirm-overlay">
+  <div class="confirm-box">
+    <p>{{ message }}</p>
+    <div class="buttons">
+      <button class="btn-confirm" (click)="confirm.emit()">{{ confirmText }}</button>
+      <button class="btn-cancel" (click)="cancel.emit()">{{ cancelText }}</button>
+    </div>
+  </div>
+</div>

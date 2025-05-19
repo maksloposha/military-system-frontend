@@ -4,7 +4,7 @@ import {
   Component,
   ComponentFactoryResolver,
   EmbeddedViewRef,
-  Injector, Input,
+  Injector,
   OnInit
 } from '@angular/core';
 import * as L from 'leaflet';
@@ -169,9 +169,10 @@ export class MapComponent implements OnInit, AfterViewInit {
     this.loadMarkers();
   }
 
-  private getIconByType(type: string) {
-    return L.icon({
-      iconUrl: `assets/icons/${type.toLowerCase()}.png`,
+  private getIconByType(type: string, side: string): L.DivIcon {
+    return L.divIcon({
+      className: '',
+      html: `<img src="assets/icons/${type.toLowerCase()}.png" class="military-icon ${side.toLowerCase()}" alt="" />`,
       iconSize: [40, 40],
       iconAnchor: [20, 40],
       popupAnchor: [0, -40]
@@ -195,7 +196,7 @@ export class MapComponent implements OnInit, AfterViewInit {
     const domElem = (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
 
     const leafletMarker = L.marker([marker.latitude, marker.longitude], {
-      icon: this.getIconByType(marker.unitType)
+      icon: this.getIconByType(marker.unitType, marker.type),
     });
     if (this.map) {
       leafletMarker.addTo(this.map);

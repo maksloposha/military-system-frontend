@@ -8,6 +8,7 @@ import {DatePipe, NgClass, NgForOf, NgIf} from '@angular/common';
 import {ChatEncryptionService} from '../../../chat-utils/chat-encryption-service';
 import {Chat} from '../../../chat-utils/models/chat.model';
 import {UserService} from '../../../services/user.service';
+import {ConfirmDialogService} from '../../../utils/confirm-dialog/confirm-dialog.service';
 
 @Component({
   selector: 'app-chat',
@@ -36,13 +37,13 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
   @ViewChild('scrollContainer') private scrollContainer!: ElementRef;
 
 
-
   constructor(
     private fb: FormBuilder,
     private chatService: ChatService,
     private webSocketService: WebSocketService,
     private encryptionService: ChatEncryptionService,
-    private userService: UserService
+    private userService: UserService,
+    private confirmDialog: ConfirmDialogService
   ) {
     this.chatForm = this.fb.group({
       message: ['']
@@ -51,6 +52,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.currentUser = user.username;
     });
   }
+
 
   ngOnInit(): void {
     this.wsSubscription = this.webSocketService.connect().subscribe((message: Message) => {
@@ -71,6 +73,13 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     this.messageSubscription = this.chatService.getChats().subscribe((chats: any[]) => {
       this.chats = chats;
+      const savedChatId = localStorage.getItem('activeChatId');
+      if (savedChatId) {
+        const chat = chats.find(c => c.id == savedChatId);
+        if (chat) {
+          this.selectChat(chat);
+        }
+      }
     });
 
     this.chatService.getAvailableUsers().subscribe(users => {
@@ -92,7 +101,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     if (!this.newChatRecipient) return;
 
     const newChat: Chat = {
-      name: `Chat with ${this.newChatRecipient}`,
+      name: `Chat between ${this.newChatRecipient} and ${this.currentUser}`,
       participants: [this.currentUser, this.newChatRecipient],
       messages: [],
       lastMessage: {content: 'New chat created', timestamp: new Date()} as Message
@@ -124,7 +133,6 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     const rawMessage = this.chatForm.value.message.trim();
     if (!rawMessage) return;
 
-    // Отримати відкритий ключ одержувача
     const recipient = this.selectedChat.participants.find((p: string) => p !== this.currentUser);
     const recipientPublicJWK = await this.chatService.fetchRecipientPublicKey(recipient!);
     const recipientPublicKey = await this.encryptionService.importPublicKey(recipientPublicJWK!);
@@ -133,7 +141,6 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     const senderPublicKey = await this.encryptionService.importPublicKey(senderPublicJWK!);
 
 
-    // Зашифрувати повідомлення
     const encryptedForRecipient = await this.encryptionService.encryptMessage(rawMessage, recipientPublicKey);
     const encryptedForSender = await this.encryptionService.encryptMessage(rawMessage, senderPublicKey);
 
@@ -152,6 +159,11 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
   ngOnDestroy(): void {
     if (this.wsSubscription) this.wsSubscription.unsubscribe();
     if (this.messageSubscription) this.messageSubscription.unsubscribe();
+
+    if (this.selectedChat) {
+      localStorage.setItem('activeChatId', this.selectedChat.id?.toString() ?? '');
+    }
+
   }
 
   loadMessages(chat: Chat) {
@@ -198,8 +210,30 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   onEnter(event: Event): void {
-      event.preventDefault();  // не додає новий рядок
-      this.sendMessage();
+    event.preventDefault();  // не додає новий рядок
+    this.sendMessage();
   }
+
+  async deleteChat(chat: Chat) {
+    const confirmed = await this.confirmDialog.open(
+      `Are you sure you want to delete chat "${chat.name}"?`,
+      'Delete',
+      'Cancel'
+    );
+    if (!confirmed) return;
+
+    this.chats = this.chats.filter(c => c !== chat);
+
+    if (this.selectedChat === chat) {
+      this.selectedChat = null;
+    }
+
+    this.chatService.deleteChat(chat!.id!).subscribe(() => {
+      console.log('Chat deleted successfully');
+    }, error => {
+      console.error('Error deleting chat:', error);
+    });
+  }
+
 
 }

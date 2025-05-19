@@ -1,0 +1,44 @@
+<div class="military-overlay">
+  <div class="admin-rank-unit military-panel military-theme">
+    <div class="panel-header">
+      <button class="back-btn" (click)="goBack()">
+        <i class="fas fa-arrow-left"></i> Повернутися
+      </button>
+      <h1 class="panel-title">Управління військовими даними</h1>
+    </div>
+
+    <div class="section-container">
+      <div class="military-section">
+        <h2 class="section-title">Військові звання</h2>
+        <div class="military-list">
+          <div class="military-item" *ngFor="let rank of ranks">
+            <span class="rank-badge">{{ rank }}</span>
+            <button class="delete-btn"><i class="fas fa-times"></i></button>
+          </div>
+        </div>
+        <div class="input-group">
+          <input class="military-input" [(ngModel)]="newRank" placeholder="Нове звання"/>
+          <button class="military-btn add-btn" (click)="addRank()">
+            <i class="fas fa-plus"></i> Додати звання
+          </button>
+        </div>
+      </div>
+
+      <div class="military-section">
+        <h2 class="section-title">Типи військ</h2>
+        <div class="military-list">
+          <div class="military-item" *ngFor="let unit of units">
+            <span class="unit-badge">{{ unit }}</span>
+            <button class="delete-btn"><i class="fas fa-times"></i></button>
+          </div>
+        </div>
+        <div class="input-group">
+          <input class="military-input" [(ngModel)]="newUnit" placeholder="Новий тип військ"/>
+          <button class="military-btn add-btn" (click)="addUnit()">
+            <i class="fas fa-plus"></i> Додати тип
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

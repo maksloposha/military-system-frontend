@@ -1,5 +1,8 @@
 <!-- Таблиця користувачів -->
 <div *ngIf="!loading" class="user-table-container">
+  <div class="nav-button-container">
+    <button (click)="navigateToRanksAndUnits()">Керування званнями та типами військ</button>
+  </div>
   <table class="user-table">
     <thead>
     <tr>
@@ -33,3 +36,8 @@
 <app-profile *ngIf="editMode"
              [userId]="userId"
               (onCancel)="cancelEdit()"></app-profile>
+
+<app-user-settings *ngIf="userSettingsVisible"
+                   (close)="userSettingsVisible = false"
+                >
+</app-user-settings>

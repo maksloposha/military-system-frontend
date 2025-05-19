@@ -219,3 +219,50 @@
   background-color: #3b9f5c;
 }
 
+
+.chat-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.delete-chat-btn {
+  background-color: #c0392b;
+  border: none;
+  color: white;
+  padding: 6px 10px;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.delete-chat-btn:hover {
+  background-color: #e74c3c;
+}
+
+.chat-list li.active {
+  background-color: #2e3b2f; /* темно-зелений тактичний фон */
+  color: #d3f9b5;            /* блідо-зелений текст */
+  font-weight: 600;
+  border-left: 4px solid #88ff4d; /* яскраво-зелений маркер */
+  box-shadow: inset 0 0 8px #88ff4d44;
+}
+
+.chat-list li.active .chat-name {
+  color: #d3f9b5;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.chat-list li {
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.chat-list li:hover {
+  background-color: #394b3b;
+}
+
+
+
