@@ -32,12 +32,15 @@
 <div *ngIf="loading" class="loading-message">
   Loading users...
 </div>
+<div class="military-overlay" *ngIf="editMode">
+  <div class="profile-modal">
+    <app-profile class="wider-profile" *ngIf="editMode"
+                 [userId]="userId"
+                 (onCancel)="cancelEdit()"></app-profile>
 
-<app-profile *ngIf="editMode"
-             [userId]="userId"
-              (onCancel)="cancelEdit()"></app-profile>
-
+  </div>
+</div>
 <app-user-settings *ngIf="userSettingsVisible"
                    (close)="userSettingsVisible = false"
-                >
+>
 </app-user-settings>

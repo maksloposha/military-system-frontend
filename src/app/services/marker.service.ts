@@ -8,7 +8,7 @@ import {MapMarker} from '../models/marker.model';
   providedIn: 'root'
 })
 export class MarkerService {
-  private apiUrl = `${environment.apiUrl}/api/markers`;  // Через проксі /api -> localhost:8080
+  private apiUrl = `${environment.apiUrl}/api/markers`;
 
   constructor(private http: HttpClient) {}
 

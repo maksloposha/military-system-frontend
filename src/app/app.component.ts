@@ -5,10 +5,10 @@ import {AuthInterceptor} from './auth/auth.interceptor';
 
 @Component({
   selector: 'app-root',
-  template: `<router-outlet></router-outlet>`, // тут буде відображатися компонент в залежності від маршруту
+  template: `<router-outlet></router-outlet>`,
   styleUrls: ['./app.component.css'],
   standalone: true,
-  imports: [RouterOutlet], // необхідно імпортувати RouterOutlet для роботи маршрутизації
+  imports: [RouterOutlet],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ]

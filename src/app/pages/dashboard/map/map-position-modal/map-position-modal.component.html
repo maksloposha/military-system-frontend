@@ -17,16 +17,21 @@
 
     <label>Тип підрозділу:</label>
     <select [(ngModel)]="unitType">
-      <option *ngFor="let unit of unitTypes" [value]="unit">{{ unit }}</option>
+      <option *ngFor="let unit of unitTypes" [ngValue]="unit">{{ unit.name }}</option>
     </select>
 
     <label>Командир:</label>
     <select [(ngModel)]="commander">
-      <option *ngFor="let c of commanders" [value]="c.id">{{ c.name }}</option>
+      <option *ngFor="let c of commanders" [ngValue]="c">{{ c.name }}</option>
     </select>
 
     <label>Оцінка особового складу:</label>
     <input type="number" [(ngModel)]="estimatedPersonnel" />
+
+    <label>Статус:</label>
+    <select [(ngModel)]="status">
+      <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
+    </select>
 
     <div class="modal-buttons">
       <button class="save" (click)="save()">Зберегти</button>

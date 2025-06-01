@@ -1,4 +1,4 @@
-// chat-encryption.service.ts
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
@@ -11,7 +11,6 @@ export class ChatEncryptionService {
 
   constructor(private http: HttpClient) {}
 
-  /** Основний метод. Завантаження ключа з сервера або генерація. */
   async initKeys(password: string): Promise<void> {
     const stored = await this.downloadEncryptedPrivateKey();
     if (stored) {
@@ -23,7 +22,6 @@ export class ChatEncryptionService {
     }
   }
 
-  /** Генерація нової пари ключів */
   private async generateKeyPair(): Promise<CryptoKeyPair> {
     return await window.crypto.subtle.generateKey(
       {
@@ -37,7 +35,6 @@ export class ChatEncryptionService {
     );
   }
 
-  /** Шифрування приватного ключа паролем та завантаження на сервер */
   private async encryptAndUploadPrivateKey(privateKey: CryptoKey, password: string): Promise<void> {
     const jwk = await crypto.subtle.exportKey('jwk', privateKey);
     const jwkStr = JSON.stringify(jwk);
@@ -61,7 +58,6 @@ export class ChatEncryptionService {
     await this.http.post(`${environment.apiUrl}/api/keys/encrypted`, payload, { withCredentials: true }).toPromise();
   }
 
-  /** Завантажити зашифрований приватний ключ із сервера */
   private async downloadEncryptedPrivateKey(): Promise<{ ciphertext: string; salt: string; iv: string } | null> {
     try {
       return await this.http.get<any>(`${environment.apiUrl}/api/keys/encrypted`, { withCredentials: true }).toPromise();
@@ -70,7 +66,6 @@ export class ChatEncryptionService {
     }
   }
 
-  /** Дешифрувати приватний ключ та отримати публічний з бекенду */
   private async decryptPrivateKeyAndLoadPair(data: { ciphertext: string; salt: string; iv: string }, password: string): Promise<CryptoKeyPair> {
     const key = await this.deriveKeyFromPassword(password, this.base64ToArrayBuffer(data.salt));
     const decrypted = await crypto.subtle.decrypt(
@@ -90,7 +85,6 @@ export class ChatEncryptionService {
     return { privateKey, publicKey };
   }
 
-  /** Отримати ключ шифрування з пароля (PBKDF2 + AES-GCM) */
   private async deriveKeyFromPassword(password: string, salt: Uint8Array): Promise<CryptoKey> {
     const baseKey = await crypto.subtle.importKey(
       'raw',
@@ -113,20 +107,17 @@ export class ChatEncryptionService {
     );
   }
 
-  /** Отримати публічний ключ поточного користувача */
   async getPublicKey(): Promise<JsonWebKey> {
     if (!this.keyPair) throw new Error('Key pair not initialized');
     return await window.crypto.subtle.exportKey('jwk', this.keyPair.publicKey);
   }
 
-  /** Зашифрувати повідомлення */
   async encryptMessage(message: string, recipientPublicKey: CryptoKey): Promise<string> {
     const encoded = new TextEncoder().encode(message);
     const encrypted = await crypto.subtle.encrypt({ name: 'RSA-OAEP' }, recipientPublicKey, encoded);
     return btoa(String.fromCharCode(...new Uint8Array(encrypted)));
   }
 
-  /** Розшифрувати повідомлення */
   async decryptMessage(encryptedBase64: string): Promise<string> {
     if (!this.keyPair?.privateKey) throw new Error('Private key not initialized');
     const encryptedBytes = Uint8Array.from(atob(encryptedBase64), c => c.charCodeAt(0));
@@ -138,31 +129,26 @@ export class ChatEncryptionService {
     return new TextDecoder().decode(decrypted);
   }
 
-  /** Імпортувати чужий публічний ключ */
   async importPublicKey(jwk: JsonWebKey): Promise<CryptoKey> {
     return crypto.subtle.importKey('jwk', jwk, { name: 'RSA-OAEP', hash: 'SHA-256' }, true, ['encrypt']);
   }
 
-  /** Отримати чужий публічний ключ по username */
   getRecipientPublicKey(username: string) {
     return this.http.get<PublicKey>(`${environment.apiUrl}/api/keys/${username}`, { withCredentials: true }).pipe(
       map(res => JSON.parse(res.jwk))
     );
   }
 
-  /** Завантажити публічний ключ поточного користувача */
   private async loadPublicKeyFromServer(): Promise<CryptoKey> {
     const res = await this.http.get<PublicKey>(`${environment.apiUrl}/api/keys/me`, { withCredentials: true }).toPromise();
     return this.importPublicKey(JSON.parse(res!.jwk));
   }
 
-  /** Завантажити мій публічний ключ */
   private async uploadMyPublicKey(publicKey: CryptoKey): Promise<void> {
     const jwk = await crypto.subtle.exportKey('jwk', publicKey);
     await this.http.post(`${environment.apiUrl}/api/keys`, { jwk: JSON.stringify(jwk) }, { withCredentials: true }).toPromise();
   }
 
-  /** Helpers */
   private arrayBufferToBase64(buffer: ArrayBuffer): string {
     return btoa(String.fromCharCode(...new Uint8Array(buffer)));
   }

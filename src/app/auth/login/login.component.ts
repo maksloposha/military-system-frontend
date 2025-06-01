@@ -3,7 +3,7 @@ import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from '@angula
 import {AuthService} from '../../services/auth.service';
 import {Router, RouterLink} from '@angular/router';
 import {CommonModule} from '@angular/common';
-import {ChatEncryptionService} from '../../chat-utils/chat-encryption-service'; // додати!
+import {ChatEncryptionService} from '../../chat-utils/chat-encryption-service';
 
 @Component({
   selector: 'app-login',
@@ -43,7 +43,7 @@ export class LoginComponent {
         },
         error: (err) => {
           if (err.error.status) {
-            // Покажіть повідомлення залежно від статусу користувача
+
             switch (err.error.status) {
               case 'PENDING':
                 this.errorMessage = 'Your account is pending approval.';

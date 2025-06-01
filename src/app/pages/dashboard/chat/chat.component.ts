@@ -56,13 +56,13 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   ngOnInit(): void {
     this.wsSubscription = this.webSocketService.connect().subscribe((message: Message) => {
-      // Додаємо нове повідомлення до вибраного чату
+
       if (this.selectedChat && this.selectedChat.messages) {
         this.encryptionService.decryptMessage(message.content).then(decryptedContent => {
           message.content = decryptedContent;
 
           if (!this.selectedChat!.messages) {
-            this.selectedChat!.messages = []; // Ініціалізуємо, якщо треба
+            this.selectedChat!.messages = [];
           }
 
           this.selectedChat!.messages.push(message);
@@ -173,25 +173,25 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     this.chatService.fetchMessages(otherParticipant!).pipe(
       switchMap(messages => {
-        // Повертаємо Observable, де кожне повідомлення розшифровується
+
         return from(messages).pipe(
           concatMap(msg => {
-            // decryptMessage повертає Promise, тому використовуємо from для перетворення на Observable
+
             return from(this.encryptionService.decryptMessage(msg.content)).pipe(
               map(decryptedContent => ({
                 ...msg,
                 content: decryptedContent,
-                timestamp: new Date(msg.timestamp)  // Перетворюємо timestamp в Date
+                timestamp: new Date(msg.timestamp)
               }))
             );
           }),
-          toArray()  // Збираємо всі повідомлення в масив
+          toArray()
         );
       })
     ).subscribe(decryptedMessages => {
       if (this.selectedChat) {
         this.selectedChat.messages = decryptedMessages;
-        this.scrollToBottom();// Встановлюємо розшифровані повідомлення
+        this.scrollToBottom();
       }
     });
   }
@@ -210,7 +210,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   onEnter(event: Event): void {
-    event.preventDefault();  // не додає новий рядок
+    event.preventDefault();
     this.sendMessage();
   }
 

@@ -166,7 +166,7 @@ export class MapZoneComponent implements OnInit {
     this.map?.on(L.Draw.Event.DELETED, (e: LeafletEvent) => {
       this.map?.removeControl(this.deleteControl!);
 
-      // Надсилаємо запит на видалення
+
       this.mapZoneService.deleteZone(zone.id!).subscribe({
         next: () => {
           console.log('Зону успішно видалено:', zone.id);
@@ -196,7 +196,7 @@ export class MapZoneComponent implements OnInit {
     this.mapZoneService.addZone(zone).subscribe((savedZone: MapZone) => {
       console.log('Zone saved successfully:', savedZone);
 
-      // Додаємо до мапи тільки після успішного збереження
+
       const latLngCoords: LatLngTuple[] = savedZone.coordinates.map(
         (coord: number[]): LatLngTuple => [coord[1], coord[0]]
       );
@@ -258,6 +258,7 @@ export class MapZoneComponent implements OnInit {
 
         const popup = this.createPopupComponent(zone, polygon);
 
+        this.zoneMap.set(zone.id!, {polygon: polygon, zone: zone});
         polygon.bindPopup(popup);
         polygon.off('click');
         polygon.on('click', () => {

@@ -46,7 +46,7 @@ export class ProfileComponent implements OnInit {
           username: this.user.username,
           email: this.user.email,
           rank: this.user.rank,
-          unit: this.user.unit,
+          unit: this.user.unitType?.name,
           status: this.user.status
         });
       });
@@ -57,7 +57,7 @@ export class ProfileComponent implements OnInit {
           username: this.user.username,
           email: this.user.email,
           rank: this.user.rank,
-          unit: this.user.unit,
+          unit: this.user.unitType?.name,
           status: this.user.status
         });
       });

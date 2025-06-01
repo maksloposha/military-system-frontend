@@ -44,5 +44,4 @@ export class UserService {
   updateUser(userId: number, user: User): Observable<User> {
     return this.http.patch<User>(`${this.apiUrl}/${userId}`, user, {withCredentials: true});
   }
-
 }

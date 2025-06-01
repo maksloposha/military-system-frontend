@@ -13,7 +13,7 @@
         <div class="military-list">
           <div class="military-item" *ngFor="let rank of ranks">
             <span class="rank-badge">{{ rank }}</span>
-            <button class="delete-btn"><i class="fas fa-times"></i></button>
+            <button class="delete-btn" (click)="deleteRank(rank)"><i class="fas fa-times"></i></button>
           </div>
         </div>
         <div class="input-group">
@@ -28,14 +28,37 @@
         <h2 class="section-title">Типи військ</h2>
         <div class="military-list">
           <div class="military-item" *ngFor="let unit of units">
-            <span class="unit-badge">{{ unit }}</span>
-            <button class="delete-btn"><i class="fas fa-times"></i></button>
+            <span class="unit-badge">{{ unit.name }}</span>
+            <img
+              *ngIf="unit.svgContent"
+              [src]="'data:image/svg+xml;base64,' + encodeSvg(unit.svgContent)"
+              alt="unit image"
+              class="unit-image"
+            />
+            <button class="delete-btn" (click)="deleteUnitType(unit.id)"><i class="fas fa-times"></i></button>
           </div>
         </div>
         <div class="input-group">
           <input class="military-input" [(ngModel)]="newUnit" placeholder="Новий тип військ"/>
+          <input type="file" (change)="onUnitImageSelected($event)" accept="image/*" />
           <button class="military-btn add-btn" (click)="addUnit()">
             <i class="fas fa-plus"></i> Додати тип
+          </button>
+        </div>
+      </div>
+
+      <div class="military-section">
+        <h2 class="section-title">Статуси бойових позицій</h2>
+        <div class="military-list">
+          <div class="military-item" *ngFor="let status of positionStatuses">
+            <span class="status-badge">{{ status }}</span>
+            <button class="delete-btn" (click)="deleteStatus(status)"><i class="fas fa-times"></i></button>
+          </div>
+        </div>
+        <div class="input-group">
+          <input class="military-input" [(ngModel)]="newPositionStatus" placeholder="Новий статус позиції" />
+          <button class="military-btn add-btn" (click)="addPositionStatus()">
+            <i class="fas fa-plus"></i> Додати статус
           </button>
         </div>
       </div>

@@ -6,6 +6,8 @@ import {MarkerService} from '../../../../services/marker.service';
 import {catchError} from 'rxjs';
 import {MapMarker} from '../../../../models/marker.model';
 import {marker} from 'leaflet';
+import {UserSettingsService} from '../../../../services/user.settings.service';
+import {UnitType} from '../../../../models/unitType.model';
 
 @Component({
   selector: 'app-map-position-modal',
@@ -28,23 +30,39 @@ export class MapPositionModalComponent implements OnInit {
   name = '';
   markerType = '';
   description = '';
-  unitType = '';
-  commander = '';
+  unitType: UnitType | undefined;
+  commander :any = null;
+  status = '';
   estimatedPersonnel: number | null = null;
 
   markerTypes: string[] = ['ALLY', 'ENEMY', 'FIREPOINT'];
-  unitTypes: string[] = ['INFANTRY', 'TANKS', 'ARTILLERY'];
+  unitTypes: UnitType[] = [];
+  statuses: string[] = [];
 
-  commanders: { id: number; name: string }[] = []; // ⬅️ Тут зберігаються командири
+  commanders: { id: number; name: string }[] = [];
 
-  constructor(private userService: UserService, private markerService: MarkerService) {
+  constructor(private userService: UserService, private markerService: MarkerService, private userSettingsService: UserSettingsService) {
   }
 
   ngOnInit(): void {
     this.userService.loadCommanders().pipe().subscribe((commanders) => {
       this.commanders = commanders;
+      if (this.marker?.commander) {
+        this.commander = this.commanders.find(c => c.name === this.marker!.commander);
+      }
     });
 
+    this.userSettingsService.getPositionStatuses().pipe().subscribe((statuses) => {
+      this.statuses = statuses;
+    });
+
+    this.userSettingsService.getUnits().pipe().subscribe((units) => {
+      this.unitTypes = units ;
+
+      if (this.marker?.unitType) {
+        this.unitType = this.unitTypes.find(u => u.name === this.marker!.unitType.name);
+      }
+    });
     if (this.marker) {
       this.name = this.marker.name;
       this.markerType = this.marker.type;
@@ -56,6 +74,7 @@ export class MapPositionModalComponent implements OnInit {
         lat: this.marker.latitude,
         lng: this.marker.longitude
       };
+      this.status = this.marker.positionStatus;
     }
   }
 
@@ -65,11 +84,12 @@ export class MapPositionModalComponent implements OnInit {
         name: this.name,
         type: this.markerType,
         description: this.description,
-        unitType: this.unitType,
-        commander: this.commander,
+        unitType: this.unitType!,
+        commander: this.commander?.name,
         estimatedPersonnel: this.estimatedPersonnel ?? 0,
         latitude: this.coordinates.lat,
-        longitude: this.coordinates.lng
+        longitude: this.coordinates.lng,
+        positionStatus: this.status
       };
 
       this.markerService.addMarker(markerData).pipe().subscribe((value) => {

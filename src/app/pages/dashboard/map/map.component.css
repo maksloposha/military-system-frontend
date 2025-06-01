@@ -113,3 +113,8 @@
   background-color: #8b0000;
 }
 
+.fixed-icon {
+  transform: none !important; /* заборона масштабування */
+  pointer-events: none;
+}
+

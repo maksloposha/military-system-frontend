@@ -3,7 +3,7 @@ import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import {RouterLink} from '@angular/router';
-import {UserSettingsService} from '../../services/user.settings.service'; // додати!
+import {UserSettingsService} from '../../services/user.settings.service';
 
 
 @Component({

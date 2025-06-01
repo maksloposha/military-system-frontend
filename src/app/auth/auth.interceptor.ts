@@ -5,13 +5,13 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // Перевірка чи є токен в cookie, автоматично відправлений браузером
+
     const token = this.getCookie('authToken');
 
     if (token) {
       const cloned = req.clone({
         setHeaders: {
-          Authorization: `Bearer ${token}` // Додаємо токен в заголовок
+          Authorization: `Bearer ${token}`
         }
       });
       return next.handle(cloned);
@@ -20,7 +20,7 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(req);
   }
 
-  // Функція для отримання cookie за іменем
+
   private getCookie(name: string): string | null {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);

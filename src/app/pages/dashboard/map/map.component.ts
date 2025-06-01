@@ -15,6 +15,7 @@ import {MapMarker} from '../../../models/marker.model';
 import {MapZoneComponent} from './map-zone/map-zone.component';
 import {MarkerPopupComponent} from './marker-popup/marker-popup.component';
 import {MarkerSocketService} from '../../../service-socket/marker-socket-service';
+import {UnitType} from '../../../models/unitType.model';
 
 @Component({
   selector: 'app-map',
@@ -62,7 +63,7 @@ export class MapComponent implements OnInit, AfterViewInit {
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(this.map);
 
-    this.markersLayer.addTo(this.map); // ➡️ Додаємо групу маркерів на карту
+    this.markersLayer.addTo(this.map);
 
     this.map.on('click', (e: L.LeafletMouseEvent) => this.onMapClick(e));
   }
@@ -169,15 +170,38 @@ export class MapComponent implements OnInit, AfterViewInit {
     this.loadMarkers();
   }
 
-  private getIconByType(type: string, side: string): L.DivIcon {
+
+  private getIconByType(type: UnitType, side: string): L.DivIcon {
+    const color = side.toLowerCase() === 'ally' ? '#3498db' : '#e74c3c';
+    let recoloredSvg = this.recolorSvg(type.svgContent, color);
+
+
+    recoloredSvg = recoloredSvg.replace(
+      /^<svg([^>]*)>/,
+      (match, attributes) => {
+        const viewBoxMatch = attributes.match(/viewBox=["']([^"']*)["']/);
+        const viewBox = viewBoxMatch ? viewBoxMatch[1] : "0 0 100 100";
+
+        const cleanedAttr = attributes
+          .replace(/(width|height)=["'][^"']*["']/g, '')
+          .trim();
+
+        return `<svg ${cleanedAttr} viewBox="${viewBox}" width="40" height="40"
+        style="width: 40px; height: 40px; transform: scale(1); transform-origin: center; pointer-events: none;">`;
+      }
+    );
+
     return L.divIcon({
-      className: '',
-      html: `<img src="assets/icons/${type.toLowerCase()}.png" class="military-icon ${side.toLowerCase()}" alt="" />`,
-      iconSize: [40, 40],
-      iconAnchor: [20, 40],
-      popupAnchor: [0, -40]
+      className: 'fixed-icon',
+      html: recoloredSvg,
+      iconSize: [0, 0],
+      iconAnchor: [20, 20],
+      popupAnchor: [0, -20]
     });
   }
+
+
+
 
   createMarker(marker: MapMarker) {
     const componentRef = this.componentFactoryResolver
@@ -239,4 +263,9 @@ export class MapComponent implements OnInit, AfterViewInit {
       this.map?.removeLayer(marker);
     }
   }
+
+  private recolorSvg(svg: string, fillColor: string): string {
+    return svg.replace(/fill="[^"]*"/g, `fill="${fillColor}"`);
+  }
+
 }

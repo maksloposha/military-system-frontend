@@ -1,4 +1,4 @@
-// Cleaned ChatService
+
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {Message} from './models/message.model';
@@ -53,7 +53,7 @@ export class ChatService {
   }
 
   getAvailableUsers(): Observable<string[]> {
-    return this.http.get<string[]>(`${environment.apiUrl}/api/chat/availableUsers`, {withCredentials: true}); // змініть URL за потреби
+    return this.http.get<string[]>(`${environment.apiUrl}/api/chat/availableUsers`, {withCredentials: true});
   }
 
   createNewChat(chat: Chat): Observable<any> {

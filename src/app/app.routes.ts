@@ -13,8 +13,8 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'user-settings', component: UserSettingsComponent, canActivate: [AuthGuard] },
   { path: 'awaiting-approval', component: AwaitingApprovalComponent },
-  { path: 'map', component: MapComponent, canActivate: [AuthGuard] },// Додаємо маршрут для карти
-  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard]},// Додаємо маршрут для карти
+  { path: 'map', component: MapComponent, canActivate: [AuthGuard] },
+  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard]},
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
-  { path: '**', redirectTo: 'login' } // fallback
+  { path: '**', redirectTo: 'login' }
 ];

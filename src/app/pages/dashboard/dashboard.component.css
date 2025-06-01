@@ -67,7 +67,8 @@ nav {
 
 .tab-content {
   flex: 1;
-  height: calc(100vh - 60px); /* Враховуємо висоту .tabs-header */
+  width: 100%;
+  height: calc(100vh - 90px); /* Враховуємо висоту .tabs-header */
   overflow: hidden;
   position: relative;
   background-color: #81613E;
@@ -75,9 +76,42 @@ nav {
   border-top: 2px solid #555;
 }
 
+
+.tabs-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  background-image: url('/assets/background/header-back.png');
+  border-bottom: 3px solid #555;
+  font-family: 'Courier New', Courier, monospace;
+  text-transform: uppercase;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.tab-content {
+  width: 100%;
+  height: calc(100vh - 90px);
+  overflow: hidden;
+  position: relative;
+  background-color: #81613E;
+  background-image: url("https://www.transparenttextures.com/patterns/navy.png");
+  border-top: 2px solid #555;
+  box-sizing: border-box;
+}
+
 html, body {
   height: 100%;
+  width: 100%;
   margin: 0;
   padding: 0;
-  font-family: 'Courier New', Courier, monospace; /* Стиль шрифту для всього документу */
+  overflow: hidden;
+  font-family: 'Courier New', Courier, monospace;
 }
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
