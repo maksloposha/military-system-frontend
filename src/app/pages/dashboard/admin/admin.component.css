@@ -168,5 +168,148 @@ app-profile {
   width: 90%; /* Адаптивність */
   z-index: 10000;
 }
+/* Краще відображення таблиці на малих екранах */
+.user-table-container {
+  overflow-x: auto;
+  padding: 10px;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Зменшити розмір шрифту на менших екранах */
+@media (max-width: 768px) {
+  .user-table th, .user-table td {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+
+  button {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+
+  form {
+    width: 90%;
+  }
+
+  .profile-modal {
+    padding: 20px;
+  }
+}
+
+/* Плавна поява модального вікна */
+.profile-modal {
+  animation: popup-in 0.2s ease-out;
+  overflow-y: auto;
+  max-height: 90vh;
+}
+
+/* Покращення навігаційної кнопки */
+.nav-button-container {
+  margin-bottom: 15px;
+  text-align: right;
+}
+
+.nav-button-container button {
+  background-color: #5e8a5e;
+}
+
+.nav-button-container button:hover {
+  background-color: #3d5c3d;
+}
+
+button {
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+}
+
+.user-table {
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+.user-table td:nth-child(4) {
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #b8e986;
+}
+
+.user-table td:last-child {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.profile-modal {
+  background: linear-gradient(145deg, #2f2f2f, #262626);
+  box-shadow: 0 0 20px rgba(75, 110, 79, 0.6);
+}
+
+.military-overlay,
+.profile-modal {
+  transition: all 0.3s ease;
+}
+
+form input {
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Покращення таблиці */
+.user-table th, .user-table td {
+  padding: 14px 18px;
+  line-height: 1.5;
+  font-size: 15px;
+}
+
+/* Краща візуальна ієрархія для заголовків */
+h1, h2, h3 {
+  color: #4b6e4f;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+/* Покращення контрасту */
+.user-table td {
+  color: #e2e2e2;
+}
+
+/* Покращена форма */
+form label {
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+form input {
+  font-size: 15px;
+  line-height: 1.4;
+  border-radius: 5px;
+}
+
+/* Стиль для статусу */
+.user-table td:nth-child(4) {
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  color: #cdeac0;
+}
+
+/* Кнопки — більш помітні */
+button {
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+/* Поліпшена структура кнопок */
+.user-table td:last-child {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-start;
+}
+
+
 
 

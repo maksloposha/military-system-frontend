@@ -40,8 +40,13 @@
         </div>
         <div class="input-group">
           <input class="military-input" [(ngModel)]="newUnit" placeholder="{{ 'TEXT_10' | translate }}"/>
-          <input type="file" (change)="onUnitImageSelected($event)" accept="image/*" />
-          <button class="military-btn add-btn" (click)="addUnit()">
+          <div class="file-input-container">
+            <input type="file" id="unit-file-input" (change)="onUnitImageSelected($event)" accept="image/*" />
+            <label for="unit-file-input" class="file-input-label">
+              <i class="fas fa-image"></i>
+              {{ selectedFileName || 'SELECT_IMAGE' | translate }}
+            </label>
+          </div>          <button class="military-btn add-btn" (click)="addUnit()">
             <i class="fas fa-plus"></i> {{ 'ADD_UNIT' | translate }}
           </button>
         </div>

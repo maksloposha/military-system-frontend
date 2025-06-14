@@ -1,18 +1,18 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {UserService} from '../../../services/user.service';
 import {User} from '../../../models/user.model';
 import {ProfileComponent} from '../profile/profile.component';
-import {Router} from '@angular/router';
 import {UserSettingsComponent} from './user-settings/user-settings.component';
 import {TranslatePipe} from '../../../translate.pipe';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css'],
   standalone: true,
-  imports: [CommonModule, ProfileComponent, UserSettingsComponent, TranslatePipe]
+  imports: [CommonModule, ProfileComponent, UserSettingsComponent, TranslatePipe, FormsModule]
 })
 export class AdminComponent implements OnInit {
   users: User[] = [];

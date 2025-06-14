@@ -30,6 +30,7 @@ export class UserSettingsComponent implements OnInit {
   positionStatuses: string[] = [];
   newPositionStatus = '';
   units: UnitType[] = [];
+  selectedFileName: string = '';
 
   constructor(private userSettingsService: UserSettingsService) {
   }
@@ -72,6 +73,7 @@ export class UserSettingsComponent implements OnInit {
 
     if (!file) return;
 
+    this.selectedFileName = file.name;
     if (file.type === 'image/svg+xml') {
       const reader = new FileReader();
       reader.onload = () => {

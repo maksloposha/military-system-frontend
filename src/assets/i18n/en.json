@@ -71,5 +71,6 @@
   "RETURN": "Return",
   "ADD_UNIT": "Add Type",
   "ADD_RANK": "Add Rank",
-  "ADD_STATUS": "Add Status"
+  "ADD_STATUS": "Add Status",
+  "SELECT_IMAGE": "Select Image"
 }
