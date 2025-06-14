@@ -1,10 +1,11 @@
 <div class="tabs-header">
   <nav class="tabs">
-    <button (click)="selectTab('map')" [class.active]="selectedTab === 'map'">Map</button>
-    <button (click)="selectTab('chat')" [class.active]="selectedTab === 'chat'">Chat</button>
-    <button (click)="selectTab('profile')" [class.active]="selectedTab === 'profile'">Profile</button>
-    <button *ngIf="isAdmin" (click)="selectTab('admin')" [class.active]="selectedTab === 'admin'">Admin Panel</button>
+    <button (click)="selectTab('map')" [class.active]="selectedTab === 'map'">{{ 'MAP' | translate }}</button>
+    <button (click)="selectTab('chat')" [class.active]="selectedTab === 'chat'">{{ 'CHAT' | translate }}</button>
+    <button (click)="selectTab('profile')" [class.active]="selectedTab === 'profile'">{{ 'PROFILE' | translate }}</button>
+    <button *ngIf="isAdmin" (click)="selectTab('admin')" [class.active]="selectedTab === 'admin'">{{ 'ADMIN_PANEL' | translate }}</button>
   </nav>
+  <app-language-switcher class="language-switcher"></app-language-switcher>
   <button class="logout-icon" (click)="logout()">
     <i class="fa fa-sign-out-alt"></i>
   </button>

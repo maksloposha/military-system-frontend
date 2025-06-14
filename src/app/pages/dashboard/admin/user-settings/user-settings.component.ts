@@ -4,6 +4,7 @@ import {NgForOf, NgIf, NgOptimizedImage} from '@angular/common';
 import {UserSettingsService} from '../../../../services/user.settings.service';
 import {RouterLink} from '@angular/router';
 import {UnitType} from '../../../../models/unitType.model';
+import {TranslatePipe} from '../../../../translate.pipe';
 
 
 @Component({
@@ -13,7 +14,8 @@ import {UnitType} from '../../../../models/unitType.model';
     NgForOf,
     RouterLink,
     NgIf,
-    NgOptimizedImage
+    NgOptimizedImage,
+    TranslatePipe
   ],
   templateUrl: './user-settings.component.html',
   standalone: true,

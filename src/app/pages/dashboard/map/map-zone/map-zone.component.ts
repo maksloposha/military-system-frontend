@@ -16,11 +16,13 @@ import {MapZoneService} from '../../../../services/map.zone.service';
 import {MapZone} from '../../../../models/zone.model';
 import {MapZonePopupComponent} from './map-zone-popup/map-zone-popup.component';
 import {ZoneSocketService} from '../../../../service-socket/zone-socket-service';
+import {ConfirmDialogService} from '../../../../utils/confirm-dialog/confirm-dialog.service';
+import {TranslatePipe} from '../../../../translate.pipe';
 
 @Component({
   selector: 'app-map-zone',
   standalone: true,
-  imports: [FormsModule, NgIf],
+  imports: [FormsModule, NgIf, TranslatePipe],
   templateUrl: './map-zone.component.html',
   styleUrl: './map-zone.component.css'
 })
@@ -56,7 +58,7 @@ export class MapZoneComponent implements OnInit {
   private zoneMap = new Map<number, { polygon: Polygon, zone: MapZone }>();
 
   constructor(private mapZoneService: MapZoneService, private viewContainerRef: ViewContainerRef,
-              private componentFactoryResolver: ComponentFactoryResolver, private mapSocketService: ZoneSocketService) {
+              private componentFactoryResolver: ComponentFactoryResolver, private mapSocketService: ZoneSocketService, private confirmDialogService: ConfirmDialogService) {
     this.mapSocketService.zoneUpdates$.subscribe((event) => {
       switch (event.type) {
         case 'NEW_ZONE':
@@ -162,23 +164,26 @@ export class MapZoneComponent implements OnInit {
     this.drawnItems.addLayer(polygon);
 
     this.map?.addControl(this.deleteControl!);
+    this.confirmDialogService.open(`Ви впевнені, що хочете видалити зону "${zone.name}"?`, 'Видалити', 'Скасувати').then((confirmed) => {
+      if (confirmed) {
+        this.map?.on(L.Draw.Event.DELETED, (e: LeafletEvent) => {
+          this.map?.removeControl(this.deleteControl!);
 
-    this.map?.on(L.Draw.Event.DELETED, (e: LeafletEvent) => {
-      this.map?.removeControl(this.deleteControl!);
 
+          this.mapZoneService.deleteZone(zone.id!).subscribe({
+            next: () => {
+              console.log('Зону успішно видалено:', zone.id);
+              this.drawnItems.removeLayer(polygon);
+              this.zoneMap.delete(zone.id!);
+            },
+            error: (err) => {
+              console.error('Помилка видалення зони:', err);
+              polygon.addTo(this.map!);
+            },
 
-      this.mapZoneService.deleteZone(zone.id!).subscribe({
-        next: () => {
-          console.log('Зону успішно видалено:', zone.id);
-          this.drawnItems.removeLayer(polygon);
-          this.zoneMap.delete(zone.id!);
-        },
-        error: (err) => {
-          console.error('Помилка видалення зони:', err);
-          polygon.addTo(this.map!);
-        },
-
-      });
+          });
+        });
+      }
     });
   }
 

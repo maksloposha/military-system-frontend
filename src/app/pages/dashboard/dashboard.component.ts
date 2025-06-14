@@ -5,6 +5,8 @@ import {AdminComponent} from './admin/admin.component';
 import {ChatComponent} from './chat/chat.component';
 import {ProfileComponent} from './profile/profile.component';
 import {NgIf} from '@angular/common';
+import {LanguageSwitcherComponent} from '../../utils/language-switcher/language-switcher.component';
+import {TranslatePipe} from '../../translate.pipe';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,7 +18,9 @@ import {NgIf} from '@angular/common';
     AdminComponent,
     ChatComponent,
     ProfileComponent,
-    NgIf
+    NgIf,
+    LanguageSwitcherComponent,
+    TranslatePipe
   ]
 })
 export class DashboardComponent {

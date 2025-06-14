@@ -1,16 +1,16 @@
 <!-- Таблиця користувачів -->
 <div *ngIf="!loading" class="user-table-container">
   <div class="nav-button-container">
-    <button (click)="navigateToRanksAndUnits()">Керування званнями та типами військ</button>
+    <button (click)="navigateToRanksAndUnits()">{{ 'TEXT_4' | translate }}</button>
   </div>
   <table class="user-table">
     <thead>
     <tr>
-      <th>Username</th>
-      <th>Email</th>
-      <th>Role</th>
-      <th>Status</th>
-      <th>Actions</th>
+      <th>{{ 'USERNAME' | translate }}</th>
+      <th>{{ 'EMAIL' | translate }}</th>
+      <th>{{ 'ROLE' | translate }}</th>
+      <th>{{ 'STATUS' | translate }}</th>
+      <th>{{ 'ACTIONS' | translate }}</th>
     </tr>
     </thead>
     <tbody>
@@ -20,9 +20,9 @@
       <td>{{ user.role }}</td>
       <td>{{ user.status }}</td>
       <td>
-        <button [disabled]="user.status !== 'PENDING'" (click)="approveUser(user.id)">Approve</button>
-        <button [disabled]="user.role === 'ADMIN' && !isCurrentUser(user)" (click)="editUser(user)">Edit</button>
-        <button [disabled]="user.role === 'ADMIN'" (click)="deleteUser(user.id)">Delete</button>
+        <button [disabled]="user.status !== 'PENDING'" (click)="approveUser(user.id)">{{ 'APPROVE' | translate }}</button>
+        <button [disabled]="user.role === 'ADMIN' && !isCurrentUser(user)" (click)="editUser(user)">{{ 'EDIT' | translate }}</button>
+        <button [disabled]="user.role === 'ADMIN'" (click)="deleteUser(user.id)">{{ 'DELETE' | translate }}</button>
       </td>
     </tr>
     </tbody>

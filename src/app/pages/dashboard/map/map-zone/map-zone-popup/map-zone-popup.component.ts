@@ -1,12 +1,16 @@
 import {Component, EventEmitter, Input, Output, signal} from '@angular/core';
 import {MapZone} from '../../../../../models/zone.model';
 import {Polygon} from 'leaflet';
+import {TranslatePipe} from '../../../../../translate.pipe';
 
 @Component({
   selector: 'app-zone-popup',
   standalone: true,
   templateUrl: './map-zone-popup.component.html',
   styleUrl: './map-zone-popup.component.css',
+  imports: [
+    TranslatePipe
+  ]
 })
 export class MapZonePopupComponent {
   @Input() zone!: MapZone;

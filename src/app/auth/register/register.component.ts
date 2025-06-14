@@ -4,6 +4,7 @@ import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import {RouterLink} from '@angular/router';
 import {UserSettingsService} from '../../services/user.settings.service';
+import {TranslatePipe} from '../../translate.pipe';
 
 
 @Component({
@@ -11,7 +12,7 @@ import {UserSettingsService} from '../../services/user.settings.service';
   templateUrl: './register.component.html',
   styleUrls: ['./../auth-style.css'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink]
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, TranslatePipe]
 })
 export class RegisterComponent implements OnInit {
   private fb = inject(FormBuilder);

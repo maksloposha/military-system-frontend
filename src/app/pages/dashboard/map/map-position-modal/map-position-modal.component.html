@@ -4,38 +4,38 @@
       {{ marker ? 'Редагувати позицію' : 'Додати позицію' }}
     </div>
 
-    <label>Назва:</label>
+    <label>{{ 'TEXT_14' | translate }}</label>
     <input type="text" [(ngModel)]="name" />
 
-    <label>Тип маркера:</label>
+    <label>{{ 'TEXT_15' | translate }}</label>
     <select [(ngModel)]="markerType">
       <option *ngFor="let type of markerTypes" [value]="type">{{ type }}</option>
     </select>
 
-    <label>Опис:</label>
+    <label>{{ 'TEXT_16' | translate }}</label>
     <textarea [(ngModel)]="description"></textarea>
 
-    <label>Тип підрозділу:</label>
+    <label>{{ 'TEXT_17' | translate }}</label>
     <select [(ngModel)]="unitType">
       <option *ngFor="let unit of unitTypes" [ngValue]="unit">{{ unit.name }}</option>
     </select>
 
-    <label>Командир:</label>
+    <label>{{ 'TEXT_18' | translate }}</label>
     <select [(ngModel)]="commander">
       <option *ngFor="let c of commanders" [ngValue]="c">{{ c.name }}</option>
     </select>
 
-    <label>Оцінка особового складу:</label>
+    <label>{{ 'TEXT_19' | translate }}</label>
     <input type="number" [(ngModel)]="estimatedPersonnel" />
 
-    <label>Статус:</label>
+    <label>{{ 'TEXT_20' | translate }}</label>
     <select [(ngModel)]="status">
       <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
     </select>
 
     <div class="modal-buttons">
-      <button class="save" (click)="save()">Зберегти</button>
-      <button class="cancel" (click)="cancel()">Скасувати</button>
+      <button class="save" (click)="save()">{{ 'TEXT_21' | translate }}</button>
+      <button class="cancel" (click)="cancel()">{{ 'TEXT_22' | translate }}</button>
     </div>
   </div>
 </div>

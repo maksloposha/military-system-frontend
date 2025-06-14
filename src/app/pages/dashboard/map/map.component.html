@@ -2,14 +2,14 @@
   <div id="map"></div>
 
   <!-- Кнопка додавання позиції всередині карти -->
-  <button class="btn-open-modal" [disabled]="buttonsAreDisabled()" (click)="onAddPositionClick()">Додати позицію</button>
-  <button class="btn-open-modal" [disabled]="buttonsAreDisabled()" (click)="isZoneCreationMode=true">Додати зону</button>
+  <button class="btn-open-modal" [disabled]="buttonsAreDisabled()" (click)="onAddPositionClick()">{{ 'TEXT_32' | translate }}</button>
+  <button class="btn-open-modal" [disabled]="buttonsAreDisabled()" (click)="isZoneCreationMode=true">{{ 'TEXT_33' | translate }}</button>
 
   <!-- Підказка під час вибору точки -->
   <div class="selecting-overlay" *ngIf="isSelectingPosition">
     <div class="selecting-message">
       Виберіть точку на карті або скасуйте
-      <button class="btn-cancel-select" (click)="cancelSelecting()">Скасувати</button>
+      <button class="btn-cancel-select" (click)="cancelSelecting()">{{ 'TEXT_34' | translate }}</button>
     </div>
   </div>
 

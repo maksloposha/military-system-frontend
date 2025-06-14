@@ -2,14 +2,14 @@
   <div class="admin-rank-unit military-panel military-theme">
     <div class="panel-header">
       <button class="back-btn" (click)="goBack()">
-        <i class="fas fa-arrow-left"></i> Повернутися
+        <i class="fas fa-arrow-left"></i> {{ 'RETURN' | translate }}
       </button>
-      <h1 class="panel-title">Управління військовими даними</h1>
+      <h1 class="panel-title">{{ 'TEXT_5' | translate }}</h1>
     </div>
 
     <div class="section-container">
       <div class="military-section">
-        <h2 class="section-title">Військові звання</h2>
+        <h2 class="section-title">{{ 'TEXT_6' | translate }}</h2>
         <div class="military-list">
           <div class="military-item" *ngFor="let rank of ranks">
             <span class="rank-badge">{{ rank }}</span>
@@ -17,38 +17,38 @@
           </div>
         </div>
         <div class="input-group">
-          <input class="military-input" [(ngModel)]="newRank" placeholder="Нове звання"/>
+          <input class="military-input" [(ngModel)]="newRank" placeholder="{{ 'TEXT_9' | translate }}"/>
           <button class="military-btn add-btn" (click)="addRank()">
-            <i class="fas fa-plus"></i> Додати звання
+            <i class="fas fa-plus"></i> {{ 'ADD_RANK' | translate }}
           </button>
         </div>
       </div>
 
       <div class="military-section">
-        <h2 class="section-title">Типи військ</h2>
+        <h2 class="section-title">{{ 'TEXT_7' | translate }}</h2>
         <div class="military-list">
           <div class="military-item" *ngFor="let unit of units">
             <span class="unit-badge">{{ unit.name }}</span>
             <img
               *ngIf="unit.svgContent"
               [src]="'data:image/svg+xml;base64,' + encodeSvg(unit.svgContent)"
-              alt="unit image"
+              alt="{{ 'UNIT_IMAGE_TRANSLATE' | translate }}"
               class="unit-image"
             />
             <button class="delete-btn" (click)="deleteUnitType(unit.id)"><i class="fas fa-times"></i></button>
           </div>
         </div>
         <div class="input-group">
-          <input class="military-input" [(ngModel)]="newUnit" placeholder="Новий тип військ"/>
+          <input class="military-input" [(ngModel)]="newUnit" placeholder="{{ 'TEXT_10' | translate }}"/>
           <input type="file" (change)="onUnitImageSelected($event)" accept="image/*" />
           <button class="military-btn add-btn" (click)="addUnit()">
-            <i class="fas fa-plus"></i> Додати тип
+            <i class="fas fa-plus"></i> {{ 'ADD_UNIT' | translate }}
           </button>
         </div>
       </div>
 
       <div class="military-section">
-        <h2 class="section-title">Статуси бойових позицій</h2>
+        <h2 class="section-title">{{ 'TEXT_8' | translate }}</h2>
         <div class="military-list">
           <div class="military-item" *ngFor="let status of positionStatuses">
             <span class="status-badge">{{ status }}</span>
@@ -56,9 +56,9 @@
           </div>
         </div>
         <div class="input-group">
-          <input class="military-input" [(ngModel)]="newPositionStatus" placeholder="Новий статус позиції" />
+          <input class="military-input" [(ngModel)]="newPositionStatus" placeholder="{{ 'TEXT_11' | translate }}" />
           <button class="military-btn add-btn" (click)="addPositionStatus()">
-            <i class="fas fa-plus"></i> Додати статус
+            <i class="fas fa-plus"></i> {{ 'ADD_STATUS' | translate }}
           </button>
         </div>
       </div>

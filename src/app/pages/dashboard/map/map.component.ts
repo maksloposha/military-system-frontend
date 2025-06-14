@@ -16,12 +16,14 @@ import {MapZoneComponent} from './map-zone/map-zone.component';
 import {MarkerPopupComponent} from './marker-popup/marker-popup.component';
 import {MarkerSocketService} from '../../../service-socket/marker-socket-service';
 import {UnitType} from '../../../models/unitType.model';
+import {ConfirmDialogService} from '../../../utils/confirm-dialog/confirm-dialog.service';
+import {TranslatePipe} from '../../../translate.pipe';
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
   standalone: true,
-  imports: [MapPositionModalComponent, NgIf, MapZoneComponent],
+  imports: [MapPositionModalComponent, NgIf, MapZoneComponent, TranslatePipe],
   styleUrls: ['./map.component.css']
 })
 export class MapComponent implements OnInit, AfterViewInit {
@@ -41,7 +43,8 @@ export class MapComponent implements OnInit, AfterViewInit {
               private componentFactoryResolver: ComponentFactoryResolver,
               private injector: Injector,
               private appRef: ApplicationRef,
-              private markerSocketService: MarkerSocketService) {
+              private markerSocketService: MarkerSocketService,
+              private confirmDialogService: ConfirmDialogService) {
   }
 
   ngOnInit(): void {
@@ -201,8 +204,6 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
 
-
-
   createMarker(marker: MapMarker) {
     const componentRef = this.componentFactoryResolver
       .resolveComponentFactory(MarkerPopupComponent)
@@ -241,12 +242,16 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   private handleDelete(id: number) {
-    this.markerService.deleteMarker(id).subscribe({
-      next: () => {
-        this.loadMarkers();
-      },
-      error: (err) => {
-        console.error('Помилка видалення маркера', err);
+    this.confirmDialogService.open('Ви впевнені, що хочете видалити цей маркер?').then((confirmed) => {
+      if (confirmed) {
+        this.markerService.deleteMarker(id).subscribe({
+          next: () => {
+            this.loadMarkers();
+          },
+          error: (err) => {
+            console.error('Помилка видалення маркера', err);
+          }
+        });
       }
     });
   }

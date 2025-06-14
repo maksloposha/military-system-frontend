@@ -8,6 +8,7 @@ import {MapMarker} from '../../../../models/marker.model';
 import {marker} from 'leaflet';
 import {UserSettingsService} from '../../../../services/user.settings.service';
 import {UnitType} from '../../../../models/unitType.model';
+import {TranslatePipe} from '../../../../translate.pipe';
 
 @Component({
   selector: 'app-map-position-modal',
@@ -17,7 +18,8 @@ import {UnitType} from '../../../../models/unitType.model';
   imports: [
     NgIf,
     FormsModule,
-    NgForOf
+    NgForOf,
+    TranslatePipe
   ]
 })
 export class MapPositionModalComponent implements OnInit {

@@ -1,10 +1,14 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MapMarker } from '../../../../models/marker.model';
+import {TranslatePipe} from '../../../../translate.pipe';
 
 @Component({
   selector: 'app-marker-popup',
   standalone: true,
   templateUrl: './marker-popup.component.html',
+  imports: [
+    TranslatePipe
+  ],
   styleUrls: ['./marker-popup.component.css']
 })
 export class MarkerPopupComponent {

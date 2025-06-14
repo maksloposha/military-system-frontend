@@ -2,8 +2,8 @@
   <!-- Sidebar: List of Chats -->
   <div class="chat-sidebar">
     <div class="sidebar-header">
-      <h3>Chats</h3>
-      <button (click)="createNewChat()">+</button>
+      <h3>{{ 'CHATS' | translate }}</h3>
+      <button (click)="createNewChat()">{{ 'TEXT_12' | translate }}</button>
     </div>
     <ul class="chat-list">
       <li *ngFor="let chat of chats" (click)="selectChat(chat)" [class.active]="chat.id === selectedChat?.id">
@@ -18,7 +18,7 @@
     <div class="chat-header">
       <h4>{{ selectedChat.name }}</h4>
       <div class="participants">{{ selectedChat.participants.length }} online</div>
-      <button class="delete-chat-btn" (click)="deleteChat(selectedChat)">🗑</button>
+      <button class="delete-chat-btn" (click)="deleteChat(selectedChat)">{{ 'TEXT_13' | translate }}</button>
     </div>
 
     <div class="chat-messages" #scrollContainer>
@@ -39,7 +39,7 @@
     >
   <textarea
     formControlName="message"
-    placeholder="Type a message..."
+    placeholder="{{ 'TYPE_A_MESSAGE_TRANSLATE' | translate }}"
     rows="1"
   ></textarea>
       <button
@@ -54,7 +54,7 @@
   <!-- Empty State -->
   <ng-template #noChat>
     <div class="chat-main empty">
-      <p>Select a chat to start messaging</p>
+      <p>{{ 'SELECT_A_CHAT_TO_START_MESSAGING' | translate }}</p>
     </div>
   </ng-template>
 </div>
@@ -64,14 +64,14 @@
 <!-- Modal для створення нового чату -->
 <div class="modal" *ngIf="showNewChatModal">
   <div class="modal-content">
-    <h3>Start New Chat</h3>
-    <label>Choose recipient:</label>
+    <h3>{{ 'START_NEW_CHAT' | translate }}</h3>
+    <label>{{ 'CHOOSE_RECIPIENT' | translate }}</label>
     <select [(ngModel)]="newChatRecipient">
       <option *ngFor="let user of availableUsers" [value]="user">{{ user }}</option>
     </select>
     <div class="modal-actions">
-      <button (click)="confirmNewChat()">Start</button>
-      <button (click)="cancelNewChat()">Cancel</button>
+      <button (click)="confirmNewChat()">{{ 'START' | translate }}</button>
+      <button (click)="cancelNewChat()">{{ 'CANCEL' | translate }}</button>
     </div>
   </div>
 </div>

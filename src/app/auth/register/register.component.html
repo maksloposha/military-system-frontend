@@ -1,26 +1,26 @@
 <div class="auth-container">
   <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-    <label>Username</label>
+    <label>{{ 'USERNAME' | translate }}</label>
     <input formControlName="username" />
 
-    <label>Email</label>
+    <label>{{ 'EMAIL' | translate }}</label>
     <input formControlName="email" type="email" />
 
-    <label>Password</label>
+    <label>{{ 'PASSWORD' | translate }}</label>
     <input formControlName="password" type="password" />
 
-    <label>Rank</label>
+    <label>{{ 'RANK' | translate }}</label>
     <select formControlName="rank">
       <option *ngFor="let r of ranks" [value]="r">{{ r }}</option>
     </select>
 
-    <label>Unit</label>
+    <label>{{ 'UNIT' | translate }}</label>
     <select formControlName="unit">
       <option *ngFor="let u of units" [value]="u">{{ u }}</option>
     </select>
 
-    <button type="submit">Register</button>
-    <a routerLink="/login">Switch to Login</a>
+    <button type="submit">{{ 'REGISTER' | translate }}</button>
+    <a routerLink="/login">{{ 'SWITCH_TO_LOGIN' | translate }}</a>
 
     <div class="error" *ngIf="errorMessage">{{ errorMessage }}</div>
     <div class="success" *ngIf="successMessage">{{ successMessage }}</div>

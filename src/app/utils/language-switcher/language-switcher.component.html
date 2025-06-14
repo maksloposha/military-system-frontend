@@ -1,0 +1,12 @@
+<div class="language-switcher">
+  <select
+    [value]="currentLanguage"
+    (change)="onLanguageChange($event)"
+    class="form-select">
+    <option
+      *ngFor="let lang of availableLanguages"
+      [value]="lang.code">
+      {{ lang.name }}
+    </option>
+  </select>
+</div>

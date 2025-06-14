@@ -1,8 +1,8 @@
 <div class="profile-container military-theme">
-  <h2>User Profile</h2>
+  <h2>{{ 'USER_PROFILE' | translate }}</h2>
   <form [formGroup]="profileForm" (ngSubmit)="updateUserProfile()">
     <div class="form-group">
-      <label for="username">Username</label>
+      <label for="username">{{ 'USERNAME' | translate }}</label>
       <input id="username" formControlName="username" type="text" class="form-control" />
       <div *ngIf="profileForm.get('username')?.invalid && profileForm.get('username')?.touched" class="error">
         Username is required and should be at least 4 characters long.
@@ -10,7 +10,7 @@
     </div>
 
     <div class="form-group">
-      <label for="email">Email</label>
+      <label for="email">{{ 'EMAIL' | translate }}</label>
       <input id="email" formControlName="email" type="email" class="form-control" />
       <div *ngIf="profileForm.get('email')?.invalid && profileForm.get('email')?.touched" class="error">
         Please enter a valid email.
@@ -18,18 +18,18 @@
     </div>
 
     <div class="form-group">
-      <label for="rank">Rank</label>
+      <label for="rank">{{ 'RANK' | translate }}</label>
       <input id="rank" formControlName="rank" type="text" class="form-control" />
     </div>
 
     <div class="form-group">
-      <label for="unit">Unit</label>
+      <label for="unit">{{ 'UNIT' | translate }}</label>
       <input id="unit" formControlName="unit" type="text" class="form-control" />
     </div>
 
     <div class="buttons">
-      <button type="submit" class="btn btn-military" [disabled]="profileForm.invalid">Update Profile</button>
-      <button type="button" class="btn btn-cancel" (click)="cancelEdit()">Cancel</button>
+      <button type="submit" class="btn btn-military" [disabled]="profileForm.invalid">{{ 'UPDATE_PROFILE' | translate }}</button>
+      <button type="button" class="btn btn-cancel" (click)="cancelEdit()">{{ 'CANCEL' | translate }}</button>
     </div>
   </form>
 </div>

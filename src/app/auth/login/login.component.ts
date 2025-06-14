@@ -4,13 +4,14 @@ import {AuthService} from '../../services/auth.service';
 import {Router, RouterLink} from '@angular/router';
 import {CommonModule} from '@angular/common';
 import {ChatEncryptionService} from '../../chat-utils/chat-encryption-service';
+import {TranslatePipe} from '../../translate.pipe';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./../auth-style.css'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, FormsModule]
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, FormsModule, TranslatePipe]
 })
 export class LoginComponent {
   private fb = inject(FormBuilder);

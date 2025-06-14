@@ -9,6 +9,7 @@ import {ChatEncryptionService} from '../../../chat-utils/chat-encryption-service
 import {Chat} from '../../../chat-utils/models/chat.model';
 import {UserService} from '../../../services/user.service';
 import {ConfirmDialogService} from '../../../utils/confirm-dialog/confirm-dialog.service';
+import {TranslatePipe} from '../../../translate.pipe';
 
 @Component({
   selector: 'app-chat',
@@ -20,7 +21,8 @@ import {ConfirmDialogService} from '../../../utils/confirm-dialog/confirm-dialog
     DatePipe,
     NgIf,
     NgClass,
-    FormsModule
+    FormsModule,
+    TranslatePipe
   ],
   styleUrls: ['./chat.component.css']
 })

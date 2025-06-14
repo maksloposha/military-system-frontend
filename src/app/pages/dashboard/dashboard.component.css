@@ -49,6 +49,11 @@ nav {
   box-shadow: 0 0 10px rgba(86, 107, 47, 0.7); /* Легкий блік */
 }
 
+.language-switcher {
+  position: absolute;
+  top: 25px;
+  right: 80px;
+}
 .logout-icon {
   position: absolute;
   top: 10px;

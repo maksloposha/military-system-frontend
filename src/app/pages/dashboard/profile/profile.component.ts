@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import {NgForOf, NgIf} from '@angular/common';
 import {User} from '../../../models/user.model';
 import {UserService} from '../../../services/user.service';
+import {TranslatePipe} from '../../../translate.pipe';
 
 @Component({
   selector: 'app-profile',
@@ -10,7 +11,8 @@ import {UserService} from '../../../services/user.service';
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    NgIf
+    NgIf,
+    TranslatePipe
   ],
   styleUrls: ['./profile.component.css']
 })
