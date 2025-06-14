@@ -18,6 +18,7 @@ import {MarkerSocketService} from '../../../service-socket/marker-socket-service
 import {UnitType} from '../../../models/unitType.model';
 import {ConfirmDialogService} from '../../../utils/confirm-dialog/confirm-dialog.service';
 import {TranslatePipe} from '../../../translate.pipe';
+import {TranslationService} from '../../../services/translation.service';
 
 @Component({
   selector: 'app-map',
@@ -44,7 +45,8 @@ export class MapComponent implements OnInit, AfterViewInit {
               private injector: Injector,
               private appRef: ApplicationRef,
               private markerSocketService: MarkerSocketService,
-              private confirmDialogService: ConfirmDialogService) {
+              private confirmDialogService: ConfirmDialogService,
+              private translate: TranslationService) {
   }
 
   ngOnInit(): void {
@@ -242,7 +244,10 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   private handleDelete(id: number) {
-    this.confirmDialogService.open('Ви впевнені, що хочете видалити цей маркер?').then((confirmed) => {
+    const dialogText = this.translate.instant("deleteMarkerConfirmation");
+    const confirmBtn = this.translate.instant("delete");
+    const cancelBtn = this.translate.instant("cancel");
+    this.confirmDialogService.open(dialogText, confirmBtn, cancelBtn).then((confirmed) => {
       if (confirmed) {
         this.markerService.deleteMarker(id).subscribe({
           next: () => {

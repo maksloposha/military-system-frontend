@@ -5,6 +5,8 @@ import {UserSettingsService} from '../../../../services/user.settings.service';
 import {RouterLink} from '@angular/router';
 import {UnitType} from '../../../../models/unitType.model';
 import {TranslatePipe} from '../../../../translate.pipe';
+import {ConfirmDialogService} from '../../../../utils/confirm-dialog/confirm-dialog.service';
+import {TranslationService} from '../../../../services/translation.service';
 
 
 @Component({
@@ -32,7 +34,7 @@ export class UserSettingsComponent implements OnInit {
   units: UnitType[] = [];
   selectedFileName: string = '';
 
-  constructor(private userSettingsService: UserSettingsService) {
+  constructor(private userSettingsService: UserSettingsService, private confirmDialog: ConfirmDialogService, private translate: TranslationService) {
   }
 
   ngOnInit(): void {
@@ -131,22 +133,45 @@ export class UserSettingsComponent implements OnInit {
   }
 
   deleteRank(rank: string) {
-    this.userSettingsService.deleteRank(rank).subscribe(() => {
-      this.loadData();
+    const dialogText = this.translate.instant("deleteRankConfirmation");
+    const confirmBtn = this.translate.instant("yes");
+    const cancelBtn = this.translate.instant("no");
+    this.confirmDialog.open(dialogText, confirmBtn, cancelBtn).then(result => {
+      if (result) {
+        this.userSettingsService.deleteRank(rank).subscribe(() => {
+          this.loadData();
+        });
+      }
     });
+
   }
 
   deleteUnitType(id: number | undefined) {
-    if (id) {
-      this.userSettingsService.deleteUnitType(id).subscribe(() => {
-        this.loadData();
-      });
-    }
+    const dialogText = this.translate.instant("deleteUnitTypeConfirmation");
+    const confirmBtn = this.translate.instant("yes");
+    const cancelBtn = this.translate.instant("no");
+    this.confirmDialog.open(dialogText, confirmBtn, cancelBtn).then(result => {
+      if (result) {
+        if (id) {
+          this.userSettingsService.deleteUnitType(id).subscribe(() => {
+            this.loadData();
+          });
+        }
+      }
+    });
   }
 
   deleteStatus(status: string) {
-    this.userSettingsService.deletePositionStatus(status).subscribe(() => {
-      this.loadData();
-    });
+    const dialogText = this.translate.instant("deleteStatusConfirmation");
+    const confirmBtn = this.translate.instant("yes");
+    const cancelBtn = this.translate.instant("no");
+    this.confirmDialog.open(dialogText, confirmBtn, cancelBtn).then(result => {
+        if (result) {
+          this.userSettingsService.deletePositionStatus(status).subscribe(() => {
+            this.loadData();
+          });
+        }
+      }
+    );
   }
 }

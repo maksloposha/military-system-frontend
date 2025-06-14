@@ -72,5 +72,16 @@
   "ADD_UNIT": "Додати тип",
   "ADD_RANK": "Додати звання",
   "ADD_STATUS": "Додати статус",
-  "SELECT_IMAGE": "Вибрати зображення"
+  "SELECT_IMAGE": "Вибрати зображення",
+  "deleteUnitTypeConfirmation": "Ви впевнені, що хочете видалити цей тип підрозділу, a також всі залежні позиції?",
+  "deleteRankConfirmation": "Ви впевнені, що хочете видалити це звання?",
+  "deleteStatusConfirmation": "Ви впевнені, що хочете видалити цей статус?",
+  "deleteChatConfirmation": "Ви впевнені, що хочете видалити цей чат?",
+  "deleteMarkerConfirmation": "Ви впевнені, що хочете видалити цей маркер?",
+  "deleteZoneConfirmation": "Ви впевнені, що хочете видалити цю зону?",
+  "deleteUserConfirmation": "Ви впевнені, що хочете видалити цього користувача?",
+  "yes": "Так",
+  "no": "Ні",
+  "delete": "Видалити",
+  "cancel": "Скасувати"
 }

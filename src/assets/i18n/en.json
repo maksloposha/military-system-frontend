@@ -72,5 +72,16 @@
   "ADD_UNIT": "Add Type",
   "ADD_RANK": "Add Rank",
   "ADD_STATUS": "Add Status",
-  "SELECT_IMAGE": "Select Image"
+  "SELECT_IMAGE": "Select Image",
+  "deleteUnitTypeConfirmation": "Are you sure you want to delete this unit type and all related positions?",
+  "deleteRankConfirmation": "Are you sure you want to delete this rank?",
+  "deleteStatusConfirmation": "Are you sure you want to delete this status?",
+  "deleteChatConfirmation": "Are you sure you want to delete this chat?",
+  "deleteMarkerConfirmation": "Are you sure you want to delete this marker?",
+  "deleteZoneConfirmation": "Are you sure you want to delete this zone?",
+  "deleteUserConfirmation": "Are you sure you want to delete this user?",
+  "yes": "Yes",
+  "no": "No",
+  "delete": "Delete",
+  "cancel": "Cancel"
 }

@@ -18,6 +18,7 @@ import {MapZonePopupComponent} from './map-zone-popup/map-zone-popup.component';
 import {ZoneSocketService} from '../../../../service-socket/zone-socket-service';
 import {ConfirmDialogService} from '../../../../utils/confirm-dialog/confirm-dialog.service';
 import {TranslatePipe} from '../../../../translate.pipe';
+import {TranslationService} from '../../../../services/translation.service';
 
 @Component({
   selector: 'app-map-zone',
@@ -58,7 +59,7 @@ export class MapZoneComponent implements OnInit {
   private zoneMap = new Map<number, { polygon: Polygon, zone: MapZone }>();
 
   constructor(private mapZoneService: MapZoneService, private viewContainerRef: ViewContainerRef,
-              private componentFactoryResolver: ComponentFactoryResolver, private mapSocketService: ZoneSocketService, private confirmDialogService: ConfirmDialogService) {
+              private componentFactoryResolver: ComponentFactoryResolver, private mapSocketService: ZoneSocketService, private confirmDialogService: ConfirmDialogService, private translate: TranslationService) {
     this.mapSocketService.zoneUpdates$.subscribe((event) => {
       switch (event.type) {
         case 'NEW_ZONE':
@@ -164,7 +165,10 @@ export class MapZoneComponent implements OnInit {
     this.drawnItems.addLayer(polygon);
 
     this.map?.addControl(this.deleteControl!);
-    this.confirmDialogService.open(`Ви впевнені, що хочете видалити зону "${zone.name}"?`, 'Видалити', 'Скасувати').then((confirmed) => {
+    const dialogText = this.translate.instant("deleteZoneConfirmation");
+    const confirmBtn = this.translate.instant("delete");
+    const cancelBtn = this.translate.instant("cancel");
+    this.confirmDialogService.open(dialogText, confirmBtn, cancelBtn).then((confirmed) => {
       if (confirmed) {
         this.map?.on(L.Draw.Event.DELETED, (e: LeafletEvent) => {
           this.map?.removeControl(this.deleteControl!);
