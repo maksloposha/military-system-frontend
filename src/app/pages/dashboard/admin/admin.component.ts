@@ -6,6 +6,8 @@ import {ProfileComponent} from '../profile/profile.component';
 import {UserSettingsComponent} from './user-settings/user-settings.component';
 import {TranslatePipe} from '../../../translate.pipe';
 import {FormsModule} from '@angular/forms';
+import {TranslationService} from '../../../services/translation.service';
+import {ConfirmDialogService} from '../../../utils/confirm-dialog/confirm-dialog.service';
 
 @Component({
   selector: 'app-admin',
@@ -22,7 +24,7 @@ export class AdminComponent implements OnInit {
   userSettingsVisible = false;
 
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService, private translate: TranslationService, private confirmDialog: ConfirmDialogService) {
   }
 
   ngOnInit(): void {
@@ -49,9 +51,15 @@ export class AdminComponent implements OnInit {
   }
 
   deleteUser(userId: number): void {
-    this.userService.deleteUser(userId).subscribe(() => {
-      this.loadUsers();
-    });
+    this.confirmDialog.open(this.translate.instant('deleteUserConfirmation'), this.translate.instant('delete'), this.translate.instant('cancel'))
+      .then((confirmed) => {
+        if (confirmed) {
+          this.userService.deleteUser(userId).subscribe(() => {
+            this.loadUsers();
+          });
+        }
+      });
+
   }
 
   editUser(user: User): void {
