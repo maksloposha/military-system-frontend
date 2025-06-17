@@ -42,15 +42,6 @@ export class MapZoneComponent implements OnInit {
     },
     draw: undefined
   });
-  private deleteControl? = new L.Control.Draw({
-    edit: {
-      featureGroup: this.drawnItems,
-      edit: false,
-      remove: true
-    },
-    draw: undefined
-  });
-
   zoneName: string = '';
   zoneType: 'ALLY' | 'ENEMY' | 'NEUTRAL' = 'ALLY';
   drawingReady = false;
@@ -117,7 +108,15 @@ export class MapZoneComponent implements OnInit {
   enableEditCoordinates(polygon: Polygon, zone: MapZone) {
     polygon.closePopup();
     this.drawnItems.addLayer(polygon);
+
     this.map?.addControl(this.editControl!);
+
+// Знаходимо інструмент редагування та запускаємо його вручну
+    const editToolbar = (this.editControl as any)._toolbars.edit;
+    if (editToolbar && editToolbar._modes.edit && editToolbar._modes.edit.handler) {
+      editToolbar._modes.edit.handler.enable();
+    }
+
 
     this.map?.once(L.Draw.Event.EDITED, (e: LeafletEvent) => {
       this.map?.removeControl(this.editControl!);
@@ -164,28 +163,21 @@ export class MapZoneComponent implements OnInit {
     polygon.closePopup();
     this.drawnItems.addLayer(polygon);
 
-    this.map?.addControl(this.deleteControl!);
     const dialogText = this.translate.instant("deleteZoneConfirmation");
     const confirmBtn = this.translate.instant("delete");
     const cancelBtn = this.translate.instant("cancel");
     this.confirmDialogService.open(dialogText, confirmBtn, cancelBtn).then((confirmed) => {
       if (confirmed) {
-        this.map?.on(L.Draw.Event.DELETED, (e: LeafletEvent) => {
-          this.map?.removeControl(this.deleteControl!);
-
-
-          this.mapZoneService.deleteZone(zone.id!).subscribe({
-            next: () => {
-              console.log('Зону успішно видалено:', zone.id);
-              this.drawnItems.removeLayer(polygon);
-              this.zoneMap.delete(zone.id!);
-            },
-            error: (err) => {
-              console.error('Помилка видалення зони:', err);
-              polygon.addTo(this.map!);
-            },
-
-          });
+        this.mapZoneService.deleteZone(zone.id!).subscribe({
+          next: () => {
+            console.log('Зону успішно видалено:', zone.id);
+            this.drawnItems.removeLayer(polygon);
+            this.zoneMap.delete(zone.id!);
+          },
+          error: (err) => {
+            console.error('Помилка видалення зони:', err);
+            polygon.addTo(this.map!);
+          },
         });
       }
     });

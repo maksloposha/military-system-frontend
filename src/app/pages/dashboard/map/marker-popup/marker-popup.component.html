@@ -4,7 +4,16 @@
   Командир: {{ marker.commander }}<br>
   Ос. склад: {{ marker.estimatedPersonnel }}<br>
   Опис: {{ marker.description }}<br><br>
-  Статус: {{ marker.positionStatus}}<br><br>
+  Статус: {{ marker.positionStatus }}<br><br>
+
+  <div>
+    Координати:
+    <code>{{ marker.latitude.toFixed(6) }}, {{ marker.longitude.toFixed(6) }}</code>
+    <button class="copy-btn" (click)="copyCoords(marker.latitude, marker.longitude)">
+      {{ copiedMarkerId === marker.id ? '✔️' : '📋' }}
+    </button>
+  </div>
+  <br>
 
   <div class="popup-actions">
     <button class="edit-btn" (click)="edit()">{{ 'TEXT_35' | translate }}</button>
@@ -12,4 +21,3 @@
     <button class="delete-btn" (click)="delete()">{{ 'TEXT_37' | translate }}</button>
   </div>
 </div>
-

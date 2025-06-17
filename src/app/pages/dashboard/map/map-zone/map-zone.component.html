@@ -15,7 +15,7 @@
     </label>
 
     <div class="zone-buttons">
-      <button class="confirm-btn" (click)="zoneToEdit ? saveNewZoneDetails() : startDrawing() ">   {{ zoneToEdit ? 'Оновити зону' : 'Нанести на карту' }}</button>
+      <button class="confirm-btn" (click)="zoneToEdit ? saveNewZoneDetails() : startDrawing() ">   {{ (zoneToEdit ? 'updateZone' : 'drawOnMap') | translate }}</button>
       <button class="cancel-btn" (click)="cancelZoneCreation()">{{ 'TEXT_31' | translate }}</button>
     </div>
   </div>

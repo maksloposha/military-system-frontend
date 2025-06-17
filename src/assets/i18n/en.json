@@ -83,5 +83,8 @@
   "yes": "Yes",
   "no": "No",
   "delete": "Delete",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "editPosition": "Edit Position",
+  "updateZone": "Update Zone",
+  "drawOnMap": "Draw on Map"
 }

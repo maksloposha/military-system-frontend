@@ -1,7 +1,7 @@
 <div class="modal-backdrop" *ngIf="visible">
   <div class="modal-content">
     <div class="modal-title">
-      {{ marker ? 'Редагувати позицію' : 'Додати позицію' }}
+      {{ (marker ? 'editPosition' : 'TEXT_32') | translate }}
     </div>
 
     <label>{{ 'TEXT_14' | translate }}</label>

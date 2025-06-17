@@ -16,7 +16,7 @@
 
     <label>{{ 'UNIT' | translate }}</label>
     <select formControlName="unit">
-      <option *ngFor="let u of units" [value]="u">{{ u }}</option>
+      <option *ngFor="let u of units" [value]="u">{{ u.name }}</option>
     </select>
 
     <button type="submit">{{ 'REGISTER' | translate }}</button>

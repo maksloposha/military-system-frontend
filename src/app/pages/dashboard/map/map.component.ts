@@ -19,6 +19,7 @@ import {UnitType} from '../../../models/unitType.model';
 import {ConfirmDialogService} from '../../../utils/confirm-dialog/confirm-dialog.service';
 import {TranslatePipe} from '../../../translate.pipe';
 import {TranslationService} from '../../../services/translation.service';
+import {Layer} from 'leaflet';
 
 @Component({
   selector: 'app-map',
@@ -166,7 +167,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   private addMarkerToMap(marker: MapMarker): void {
     if (!this.map) return;
 
-    this.markersLayer.addLayer(this.createMarker(marker));
+    this.createMarker(marker).then(leafletMarker => {this.markersLayer.addLayer(leafletMarker as Layer);});
   }
 
   onMarkerSaved(): void {
@@ -176,37 +177,23 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
 
-  private getIconByType(type: UnitType, side: string): L.DivIcon {
-    const color = side.toLowerCase() === 'ally' ? '#3498db' : '#e74c3c';
+  private async getIconByType(type: UnitType, side: string): Promise<L.Icon> {
+    const color = side.toLowerCase() === 'ally' ? '#034269' : '#520b01';
     let recoloredSvg = this.recolorSvg(type.svgContent, color);
 
+    const pngUrl = await this.convertSvgToPng(recoloredSvg, 100, 100);
 
-    recoloredSvg = recoloredSvg.replace(
-      /^<svg([^>]*)>/,
-      (match, attributes) => {
-        const viewBoxMatch = attributes.match(/viewBox=["']([^"']*)["']/);
-        const viewBox = viewBoxMatch ? viewBoxMatch[1] : "0 0 100 100";
-
-        const cleanedAttr = attributes
-          .replace(/(width|height)=["'][^"']*["']/g, '')
-          .trim();
-
-        return `<svg ${cleanedAttr} viewBox="${viewBox}" width="40" height="40"
-        style="width: 40px; height: 40px; transform: scale(1); transform-origin: center; pointer-events: none;">`;
-      }
-    );
-
-    return L.divIcon({
-      className: 'fixed-icon',
-      html: recoloredSvg,
-      iconSize: [0, 0],
-      iconAnchor: [20, 20],
-      popupAnchor: [0, -20]
+    return L.icon({
+      iconUrl: pngUrl,
+      iconSize: [100, 100],
+      iconAnchor: [50, 50],
+      popupAnchor: [0, -50],
+      className: 'fixed-icon'
     });
   }
 
 
-  createMarker(marker: MapMarker) {
+  private async createMarker(marker: MapMarker): Promise<L.Marker> {
     const componentRef = this.componentFactoryResolver
       .resolveComponentFactory(MarkerPopupComponent)
       .create(this.injector);
@@ -222,15 +209,18 @@ export class MapComponent implements OnInit, AfterViewInit {
 
     const domElem = (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
 
-    const leafletMarker = L.marker([marker.latitude, marker.longitude], {
-      icon: this.getIconByType(marker.unitType, marker.type),
-    });
+    // Очікуємо отримання іконки
+    const icon = await this.getIconByType(marker.unitType, marker.type);
+
+    const leafletMarker = L.marker([marker.latitude, marker.longitude], { icon });
+
     if (this.map) {
       leafletMarker.addTo(this.map);
     }
     this.markersMap.set(marker.id, leafletMarker);
 
     leafletMarker.bindPopup(domElem);
+
     return leafletMarker;
   }
 
@@ -277,5 +267,29 @@ export class MapComponent implements OnInit, AfterViewInit {
   private recolorSvg(svg: string, fillColor: string): string {
     return svg.replace(/fill="[^"]*"/g, `fill="${fillColor}"`);
   }
+
+  private convertSvgToPng(svg: string, width: number, height: number): Promise<string> {
+    return new Promise((resolve) => {
+      const svgBlob = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
+      const url = URL.createObjectURL(svgBlob);
+
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+
+        const ctx = canvas.getContext('2d')!;
+        ctx.clearRect(0, 0, width, height);
+        ctx.drawImage(img, 0, 0, width, height);
+
+        URL.revokeObjectURL(url);
+        resolve(canvas.toDataURL('image/png'));
+      };
+      img.src = url;
+    });
+  }
+
+
 
 }

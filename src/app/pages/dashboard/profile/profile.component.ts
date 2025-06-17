@@ -4,6 +4,8 @@ import {NgForOf, NgIf} from '@angular/common';
 import {User} from '../../../models/user.model';
 import {UserService} from '../../../services/user.service';
 import {TranslatePipe} from '../../../translate.pipe';
+import {UserSettingsService} from '../../../services/user.settings.service';
+import {UnitType} from '../../../models/unitType.model';
 
 @Component({
   selector: 'app-profile',
@@ -12,20 +14,24 @@ import {TranslatePipe} from '../../../translate.pipe';
   imports: [
     ReactiveFormsModule,
     NgIf,
-    TranslatePipe
+    TranslatePipe,
+    NgForOf
   ],
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
   user: User = {} as User;
-  profileForm: FormGroup;
+  profileForm: FormGroup
+  availableRanks : string[] = [];
+  availableUnits : UnitType[] = [];
   @Input() userId: number | null = null;
   @Output() onCancel = new EventEmitter<void>();
 
 
   constructor(
     private userService: UserService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private userSettingsService: UserSettingsService
   ) {
     this.profileForm = this.fb.group({
       username: ['', [Validators.required, Validators.minLength(4)]],
@@ -64,6 +70,13 @@ export class ProfileComponent implements OnInit {
         });
       });
     }
+
+    this.userSettingsService.getRanks().subscribe((ranks) => {
+      this.availableRanks = ranks;
+    });
+    this.userSettingsService.getUnits().subscribe((units) => {
+      this.availableUnits = units;
+    });
   }
 
   updateUserProfile() {
